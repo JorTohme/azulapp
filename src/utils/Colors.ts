@@ -13,6 +13,14 @@ const Colors = {
   red: '#d66060',
   gray: '#c4c4c4',
   lightGray: '#dedede',
+
+  gray6: '#f2f2f2',
+
+  text2: '#10231d',
+  background2: '#f4faf8',
+  primary2: '#6a2f42',
+  secondary2: '#e7deca',
+  accent2:'#9e4763',
 }
 
 // --text: #10231d;

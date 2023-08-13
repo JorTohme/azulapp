@@ -1,9 +1,7 @@
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, ScrollView } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import Colors from "../../utils/Colors";
-import Icons from "../../utils/Icons";
 
 export default function SpaceSelector({ data, setSelectedSpace }) {
-  const { width, height } = Dimensions.get("window");
 
   return (
     <ScrollView horizontal style={s.spaceSelector} contentContainerStyle={s.selectContainer} >
@@ -24,7 +22,7 @@ const s = StyleSheet.create({
   spaceSelector: {
     height: 50,
     borderBottomWidth: 0.5,
-    borderBottomColor: Colors.lightGray,
+    borderBottomColor: Colors.gray,
   },
   selectContainer: {
     paddingHorizontal: 15,
@@ -37,7 +35,7 @@ const s = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 10,
     alignItems: 'center',
-    backgroundColor: Colors.acent,
+    backgroundColor: Colors.primary2,
   },
   text: {
     color: Colors.white,

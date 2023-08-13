@@ -5,8 +5,14 @@ import Table from "../Table/Table";
 
 export default function TableListView({data, selectedSpace}) {
 
-  const [detailData, setDetailData] = useState(null)
+  const [detailData, setDetailData] = useState(
+    data[selectedSpace].tables[0] ? data[selectedSpace].tables[0] : null
+  )
   const [total, setTotal] = useState(0)
+
+  useEffect(() => {
+    setDetailData(data[selectedSpace].tables[0]);
+  }, [selectedSpace]);
 
   useEffect(() => {
     let total = 0;
@@ -25,8 +31,11 @@ export default function TableListView({data, selectedSpace}) {
       <ScrollView style={[s.scrollViewList]} contentContainerStyle={[s.listView, {paddingBottom: 200}]}>
         {
           data[selectedSpace].tables.map((table, index) => {
-            return (<Table key={index} state='free' shape='square' id={table.id}
-            onClick={() => setDetailData(table)}/>)
+            return (
+            <Table key={index} state='free' shape='square' id={table.id} 
+            style={detailData && detailData.id == table.id ? s.selected : null}
+            onClick={() => setDetailData(table)}/>
+            )
           })
         }
       </ScrollView>
@@ -36,12 +45,12 @@ export default function TableListView({data, selectedSpace}) {
             detailData && detailData.orders.map((order, index) => {
               return (
                 <>
-                  <View key={index} style={s.order2}>
+                  <View key={order.name} style={s.order2}>
                     <Text style={{fontWeight: '500'}}>Orden {order.name}</Text>
                     {
                       order.items.map((item, index) => {
                         return (
-                          <View key={index} style={s.orderDetail} >
+                          <View key={item.name} style={s.orderDetail} >
                             <View style={s.orderStyle}>
                               <View style={s.amount}>
                                 <Text>{item.amount}</Text>
@@ -83,6 +92,10 @@ const s = StyleSheet.create({
     minHeight: '100%',
     borderRightColor: Colors.lightGray,
     borderRightWidth: 0.5,
+    backgroundColor: Colors.background2,
+  },
+  selected: {
+    backgroundColor: Colors.acent,
   },
   detailContainer: {
     flex: 1,

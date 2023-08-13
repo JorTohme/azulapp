@@ -40,18 +40,18 @@ function SelectorBar ({selectedView, setSelectedView}) {
 }
 
 export default function Main () {
-  const { width, height } = Dimensions.get('window');
 
   const [selectedView, setSelectedView] = useState(Views.Map);
   const [selectedSpace, setSelectedSpace] = useState(0);
 
-  const tables = [1, 2, 3, 4, 5, 6, 7, 8,9, 10, 11, 12, 13, 14, 15, 16, 17, 18];
   return (
     <View style={s.container}>
       <Header title='Mesas'/>
-      <SelectorBar selectedView={selectedView} setSelectedView={setSelectedView} />
-      <View>
-        <SpaceSelector data={Mock} setSelectedSpace={setSelectedSpace} />
+      <View style={{backgroundColor: Colors.background2}}>
+        <SelectorBar selectedView={selectedView} setSelectedView={setSelectedView} />
+        <View>
+          <SpaceSelector data={Mock} setSelectedSpace={setSelectedSpace} />
+        </View>
       </View>
       {
         selectedView == Views.Map ? (
@@ -59,7 +59,7 @@ export default function Main () {
           <ScrollView style={s.scrollView} contentContainerStyle={s.mapView}>
             {
               Mock[selectedSpace].tables.map((table, index) => {
-                return (<Table key={index} state='free' shape='square' id={table.id} map/>)
+                return (<Table key={index} state={table.state} id={table.id} shape='square' map/>)
               })
             }
           </ScrollView>
@@ -75,7 +75,7 @@ export default function Main () {
 const s = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.background2,
   },
   scrollView: {
     height: '100%',

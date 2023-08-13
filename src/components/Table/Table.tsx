@@ -8,7 +8,7 @@ export default function Table(props) {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { width, height } = Dimensions.get('window');
+  const { width } = Dimensions.get('window');
 
   let state;
 
@@ -48,7 +48,7 @@ export default function Table(props) {
     return (
       <>
         <TouchableOpacity 
-        style={[s.container, shape, state, {width: '100%', height: 50}]}
+        style={[s.container, shape, state, {width: '100%', height: 50}, props.style]}
         onPress={() => props.onClick()}
         >
           <Text style={s.numberList}>{props.id}</Text>

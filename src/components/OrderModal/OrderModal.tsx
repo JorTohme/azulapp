@@ -1,7 +1,7 @@
 import { View, StyleSheet, Modal, Text, Pressable, Dimensions, ScrollView } from "react-native";
 
 export default function OrderModal({visible, setVisible}) {
-  const { width, height } = Dimensions.get('window');
+  const { height } = Dimensions.get('window');
   return (
       <Modal
       animationType="fade"
