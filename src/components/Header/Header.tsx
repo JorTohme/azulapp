@@ -1,13 +1,22 @@
-import { StyleSheet, View, Text, StatusBar } from "react-native";
+import { useState } from "react";
+import { StyleSheet, View, Text, StatusBar, Animated, TouchableOpacity } from "react-native";
+import SideMenu from "../SideMenu/SideMenu";
 import Colors from "../../utils/Colors";
 
-export default function Header(props) {
+
+export default function Header({title}) {
+  const [visible, setVisible] = useState(false);
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.blue} />
       <View style={styles.container}>
-        <Text style={styles.text}>{props.title}</Text>
+        <TouchableOpacity onPress={() => setVisible(!visible)}>
+          <Text style={styles.text}>☰</Text>
+        </TouchableOpacity>
+        <Text style={styles.text}>{title}</Text>
       </View>
+      <SideMenu visible={visible} />
     </>
   );
 }
@@ -19,7 +28,8 @@ const styles = StyleSheet.create({
     height: 60,
     paddingVertical: 10,
     paddingHorizontal: 20,
-
+    flexDirection: "row",
+    justifyContent: "space-between",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
