@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Animated, StyleSheet } from 'react-native';
+import { View, Text, Animated, StyleSheet, TouchableHighlight } from 'react-native';
 
 export default function SideMenu({ visible }) {
   const [slideAnim] = useState(new Animated.Value(visible ? 1 : 0)); // Initialize with proper value
@@ -31,7 +31,15 @@ export default function SideMenu({ visible }) {
         ]}
       >
         <View style={s.content}>
-          <Text>SideMenu</Text>
+          <Text style={s.title}>Vistas</Text>
+          <TouchableHighlight onPress={() => {
+          }}>
+            <Text>Mesas</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => {
+          }}>
+            <Text>Comandas</Text>
+          </TouchableHighlight>
         </View>
       </Animated.View>
     </>
@@ -59,6 +67,10 @@ const s = StyleSheet.create({
   content: {
     flex: 1,
     padding: 20,
-  },
 
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
 });

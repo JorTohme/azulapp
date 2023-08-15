@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View, Dimensions, TouchableOpacity, Image } from 'react-native'
-import Colors from './utils/Colors'
-import Icons from './utils/Icons';
-import { Views } from './utils/Types';
-import Header from './components/Header/Header'
-import Table from './components/Table/Table'
-import TableListView from './components/TableListView/TableListView';
-import {Mock} from './utils/Mock';
-import SpaceSelector from './components/SpaceSelector/SpaceSelector';
+import Colors from '../utils/Colors'
+import Icons from '../utils/Icons';
+import { Views } from '../utils/Types';
+import Header from '../components/Header/Header'
+import Table from '../components/Table/Table'
+import TableListView from '../components/TableListView/TableListView';
+import {Mock} from '../utils/Mock';
+import SpaceSelector from '../components/SpaceSelector/SpaceSelector';
 
 function SelectorBar ({selectedView, setSelectedView}) {
   return (
@@ -39,14 +39,13 @@ function SelectorBar ({selectedView, setSelectedView}) {
   )
 }
 
-export default function Main () {
+export default function Tables ({navigation}) {
 
   const [selectedView, setSelectedView] = useState(Views.Map);
   const [selectedSpace, setSelectedSpace] = useState(0);
 
   return (
     <View style={s.container}>
-      <Header title='Mesas'/>
       <View style={{backgroundColor: Colors.background2}}>
         <SelectorBar selectedView={selectedView} setSelectedView={setSelectedView} />
         <View>

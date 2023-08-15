@@ -1,12 +1,19 @@
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Main from './src/main'
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import Colors from './src/utils/Colors';
+import { StatusBar } from 'react-native';
+// Views
+import Tables from './src/Views/Tables'
+import Orders from './src/Views/Orders';
 
-const Stack = createNativeStackNavigator();
+// Navigators
+
+
+// const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App () {
   return (
@@ -14,13 +21,29 @@ export default function App () {
     <NavigationContainer>
       <SafeAreaProvider>
         <SafeAreaView style={{flex: 1, backgroundColor: Colors.blue}}>
-          <Stack.Navigator>
-            <Stack.Screen name="Main" component={Main} 
+          <StatusBar barStyle="dark-content" backgroundColor={Colors.blue} />
+          <Tab.Navigator
+            screenOptions={{
+              tabBarStyle: {
+                backgroundColor: Colors.blue,
+                borderTopWidth: 0,
+              },
+              tabBarActiveTintColor: Colors.white,
+              tabBarInactiveTintColor: Colors.white,
+              headerShown: false,
+            }}
+          >
+            <Tab.Screen name="Tables" component={Tables} 
             options={{
               headerShown: false,
             }}
             />
-          </Stack.Navigator>
+            <Tab.Screen name="Orders" component={Orders} 
+            options={{
+              headerShown: false,
+            }}
+            />
+          </Tab.Navigator>
         </SafeAreaView>
       </SafeAreaProvider>
     </NavigationContainer>
