@@ -1,5 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, Text, Pressable, Image, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Pressable,
+  Image,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import Icons from '../../utils/Icons';
 import Colors from '../../utils/Colors';
 
@@ -60,9 +68,9 @@ export default function TabNavigator({state, descriptors, navigation}) {
           );
         })}
       </View>
-      <Pressable style={s.addButton} onPress={() => {}}>
+      <TouchableOpacity style={s.addButton} onPress={() => {}}>
         <Image source={Icons.TabPlus} style={s.plusIcon} />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 }

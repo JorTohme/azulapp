@@ -7,7 +7,9 @@ import {MockOrders} from '../utils/MockOrders';
 export default function Orders() {
   return (
     <SafeAreaView style={s.container}>
-      <ScrollView style={s.orderContainer}>
+      <ScrollView
+        style={s.orderContainer}
+        contentContainerStyle={s.containerPadding}>
         {MockOrders.map((order, index) => (
           <Order key={index} data={order} />
         ))}
@@ -25,5 +27,8 @@ const s = StyleSheet.create({
     height: '100%',
     paddingHorizontal: 20,
     paddingVertical: 10,
+  },
+  containerPadding: {
+    paddingBottom: 100,
   },
 });
