@@ -103,7 +103,7 @@ const s = StyleSheet.create({
   detailContainer: {
     flex: 1,
     padding: 15,
-    backgroundColor: Colors.backgroundSecondary,
+    backgroundColor: Colors.gray6,
   },
   detail: {
     backgroundColor: Colors.white,

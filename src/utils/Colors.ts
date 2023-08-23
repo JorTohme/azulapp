@@ -1,6 +1,6 @@
 const Colors = {
-  background: '#e2f3ed',
-  backgroundSecondary: '#f5f5f5',
+  background: '#d2d2fc',
+  backgroundSecondary: '#d2d2fc',
   acent: '#944b3d',
   text: '#0f241d',
 
@@ -15,9 +15,10 @@ const Colors = {
   lightGray: '#dedede',
 
   gray6: '#f2f2f2',
+  selected: '#e84545',
 
   text2: '#10231d',
-  background2: '#f4faf8',
+  background2: '#e8f1fa',
   primary2: '#6a2f42',
   secondary2: '#e7deca',
   accent2: '#9e4763',

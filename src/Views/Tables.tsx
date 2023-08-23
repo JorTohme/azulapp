@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  SafeAreaView,
 } from 'react-native';
 import Colors from '../utils/Colors';
 import Icons from '../utils/Icons';
@@ -56,7 +57,7 @@ export default function Tables() {
   const [selectedSpace, setSelectedSpace] = useState(0);
 
   return (
-    <View style={s.container}>
+    <SafeAreaView style={s.container}>
       <View style={{backgroundColor: Colors.background2}}>
         <SelectorBar
           selectedView={selectedView}
@@ -85,14 +86,14 @@ export default function Tables() {
       ) : (
         <TableListView data={Mock} selectedSpace={selectedSpace} />
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
 const s = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background2,
+    backgroundColor: Colors.gray6,
   },
   scrollView: {
     height: '100%',

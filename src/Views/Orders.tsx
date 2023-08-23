@@ -1,26 +1,24 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import Colors from '../utils/Colors';
+import {StyleSheet, ScrollView, SafeAreaView} from 'react-native';
 import Order from '../components/Order/Order';
 
 import {MockOrders} from '../utils/MockOrders';
 
 export default function Orders() {
   return (
-    <View style={s.container}>
+    <SafeAreaView style={s.container}>
       <ScrollView style={s.orderContainer}>
         {MockOrders.map((order, index) => (
           <Order key={index} data={order} />
         ))}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const s = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
     paddingTop: 20,
   },
   orderContainer: {
