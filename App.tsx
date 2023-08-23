@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Colors from './src/utils/Colors';
 import {StatusBar} from 'react-native';
+
 // Views
 import Tables from './src/Views/Tables';
 import Orders from './src/Views/Orders';
