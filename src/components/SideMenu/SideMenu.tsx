@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Animated, StyleSheet, TouchableHighlight } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Animated,
+  StyleSheet,
+  TouchableHighlight,
+} from 'react-native';
 
-export default function SideMenu({ visible }) {
+export default function SideMenu({visible}) {
   const [slideAnim] = useState(new Animated.Value(visible ? 1 : 0)); // Initialize with proper value
 
   useEffect(() => {
@@ -10,7 +16,7 @@ export default function SideMenu({ visible }) {
       duration: 500, // Use the same duration for both opening and closing
       useNativeDriver: false,
     }).start();
-  }, [visible]);
+  }, [slideAnim, visible]);
 
   return (
     <>
@@ -28,16 +34,13 @@ export default function SideMenu({ visible }) {
               },
             ],
           },
-        ]}
-      >
+        ]}>
         <View style={s.content}>
           <Text style={s.title}>Vistas</Text>
-          <TouchableHighlight onPress={() => {
-          }}>
+          <TouchableHighlight onPress={() => {}}>
             <Text>Mesas</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => {
-          }}>
+          <TouchableHighlight onPress={() => {}}>
             <Text>Comandas</Text>
           </TouchableHighlight>
         </View>
@@ -67,7 +70,6 @@ const s = StyleSheet.create({
   content: {
     flex: 1,
     padding: 20,
-
   },
   title: {
     fontSize: 22,

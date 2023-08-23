@@ -1,20 +1,22 @@
-import { Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
-import Colors from "../../utils/Colors";
+import React from 'react';
+import {Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+import Colors from '../../utils/Colors';
 
-export default function SpaceSelector({ data, setSelectedSpace }) {
-
+export default function SpaceSelector({data, setSelectedSpace}) {
   return (
-    <ScrollView horizontal style={s.spaceSelector} contentContainerStyle={s.selectContainer} >
-      {
-        data.map((item, index) => (
-          <TouchableOpacity style={s.selector} key={index}
-          onPress={() => setSelectedSpace(item.id)}
-          >
-            <Text style={s.text}>{item.name}</Text>
-          </TouchableOpacity>
-        ))
-      }
-  </ScrollView>
+    <ScrollView
+      horizontal
+      style={s.spaceSelector}
+      contentContainerStyle={s.selectContainer}>
+      {data.map((item, index) => (
+        <TouchableOpacity
+          style={s.selector}
+          key={index}
+          onPress={() => setSelectedSpace(item.id)}>
+          <Text style={s.text}>{item.name}</Text>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 }
 
@@ -40,4 +42,4 @@ const s = StyleSheet.create({
   text: {
     color: Colors.white,
   },
-})
+});

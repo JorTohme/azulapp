@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "ts:check": "tsc --noEmit"
+    "ts:check": "tsc --noEmit",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.11",
@@ -28,16 +29,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@react-native-community/eslint-config": "^3.2.0",
     "babel-plugin-module-resolver": "^5.0.0",
     "eslint": "^8.46.0",
-    "standard": "^17.1.0"
+    "eslint-plugin-prettier": "^5.0.0"
   },
   "private": true,
-  "eslintConfig": {
-    "extends": [
-      "@typescript-eslint/eslint-plugin",
-      "standard"
-    ]
+  "jest": {
+    "preset": "react-native"
   }
 }

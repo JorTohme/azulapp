@@ -1,8 +1,13 @@
-import { useState } from "react";
-import { StyleSheet, View, Text, StatusBar, Animated, TouchableOpacity } from "react-native";
-import SideMenu from "../SideMenu/SideMenu";
-import Colors from "../../utils/Colors";
-
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  StatusBar,
+  TouchableOpacity,
+} from 'react-native';
+import SideMenu from '../SideMenu/SideMenu';
+import Colors from '../../utils/Colors';
 
 export default function Header({title}) {
   const [visible, setVisible] = useState(false);
@@ -23,14 +28,14 @@ export default function Header({title}) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    width: '100%',
     backgroundColor: Colors.blue,
     height: 60,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    shadowColor: "#000",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 5,
@@ -43,8 +48,7 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.white,
     fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "right",
-  }
-  
+    fontWeight: 'bold',
+    textAlign: 'right',
+  },
 });

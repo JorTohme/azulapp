@@ -20,8 +20,8 @@ const Colors = {
   background2: '#f4faf8',
   primary2: '#6a2f42',
   secondary2: '#e7deca',
-  accent2:'#9e4763',
-}
+  accent2: '#9e4763',
+};
 
 // --text: #10231d;
 // --background: #f4faf8;
@@ -29,4 +29,4 @@ const Colors = {
 // --secondary: #e7deca;
 // --accent: #9e4763;
 
-export default Colors
+export default Colors;
