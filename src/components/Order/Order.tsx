@@ -1,23 +1,31 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Colors from '../../utils/Colors';
 
 export default function Order({data}) {
+  const orderTime = new Date(data.created_at).toLocaleTimeString();
+  const actualTime = new Date().toLocaleTimeString();
+
+  // Saber el tiempo que paso desde que se pidio
+
+  const timeZero = orderTime - actualTime;
+
+  console.log(timeZero);
   return (
     <View style={s.order}>
       <View style={s.orderTopData}>
-        <Text># {data.tableId}</Text>
-        {/* Tiempo desde que se pidio el pedido */}
-        <Text>{data.time}</Text>
-        <Text>{data.waiter}</Text>
+        <Text>#{data.table}</Text>
+        {/* Hora en la que se pidio  */}
+        <Text>{}</Text>
+        <Text>{data.waiterName}</Text>
       </View>
       <View style={s.orderDetail}>
-        {data.items.map((item, index) => {
+        {data.orderItems.map((item, index) => {
           return (
-            <View style={s.detailContainer} key={index}>
+            <View style={s.detailContainer} key={item.order_id + index}>
               <Text style={s.amount}> {item.amount} </Text>
               <View style={s.detailNoteContainer}>
-                <Text style={s.detail}> {item.name} </Text>
+                <Text style={s.detail}> {item.menuItem.name} </Text>
                 {item.note && <Text style={s.note}> {item.note} </Text>}
               </View>
             </View>

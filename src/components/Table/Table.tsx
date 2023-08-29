@@ -4,45 +4,53 @@ import Colors from '../../utils/Colors';
 import OrderModal from '../OrderModal/OrderModal';
 import {useState} from 'react';
 
-export default function Table(props) {
+interface Props {
+  data: any;
+  styles?: any;
+  onClick?: any;
+  shape: string;
+  map?: boolean;
+}
+
+export default function Table({data, styles, onClick, shape, map}: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const {width} = Dimensions.get('window');
 
   let state;
 
-  if (props.state === 'free') {
+  if (data.state === 'free') {
     state = {backgroundColor: Colors.green};
-  } else if (props.state === 'preparing') {
+  } else if (data.state === 'preparing') {
     state = {backgroundColor: Colors.black};
-  } else if (props.state === 'served') {
+  } else if (data.state === 'served') {
     state = {backgroundColor: Colors.red};
   } else {
     state = {backgroundColor: Colors.gray};
   }
 
-  let shape;
+  let shapeStyle;
 
-  if (props.shape === 'square') {
-    shape = s.shapeSquare;
-  } else if (props.shape === 'round') {
-    shape = s.shapeRound;
+  if (shape === 'square') {
+    shapeStyle = s.shapeSquare;
+  } else if (shape === 'round') {
+    shapeStyle = s.shapeRound;
   } else {
-    shape = s.shapeSquare;
+    shapeStyle = s.shapeSquare;
   }
 
-  if (props.map) {
+  if (map) {
     return (
       <>
         <TouchableOpacity
           style={[
             s.container,
-            shape,
+            shapeStyle,
             state,
             {width: width / 5, height: width / 5},
           ]}
           onPress={() => setModalVisible(true)}>
-          <Text style={s.number}>{props.id}</Text>
+          <Text style={s.number}>{data.id}</Text>
         </TouchableOpacity>
         <OrderModal visible={modalVisible} setVisible={setModalVisible} />
       </>
@@ -53,13 +61,13 @@ export default function Table(props) {
         <TouchableOpacity
           style={[
             s.container,
-            shape,
+            shapeStyle,
             state,
             {width: '100%', height: 50},
-            props.style,
+            styles,
           ]}
-          onPress={() => props.onClick()}>
-          <Text style={s.numberList}>{props.id}</Text>
+          onPress={() => onClick()}>
+          <Text style={s.numberList}>{data.id}</Text>
         </TouchableOpacity>
       </>
     );

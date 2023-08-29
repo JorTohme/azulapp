@@ -7,23 +7,23 @@ export default function TableListView({data, selectedSpace}) {
   const [detailData, setDetailData] = useState(
     data[selectedSpace].tables[0] ? data[selectedSpace].tables[0] : null,
   );
-  const [total, setTotal] = useState(0);
+  // const [total, setTotal] = useState(0);
 
   useEffect(() => {
     setDetailData(data[selectedSpace].tables[0]);
   }, [data, selectedSpace]);
 
-  useEffect(() => {
-    let totalAmount = 0;
-    if (detailData) {
-      detailData.orders.map((order) => {
-        order.items.map((item) => {
-          totalAmount += item.price * item.amount;
-        });
-      });
-    }
-    setTotal(totalAmount);
-  }, [detailData]);
+  // useEffect(() => {
+  //   let totalAmount = 0;
+  //   if (detailData) {
+  //     detailData.orders.map((order) => {
+  //       order.items.map((item) => {
+  //         totalAmount += item.price * item.amount;
+  //       });
+  //     });
+  //   }
+  //   setTotal(totalAmount);
+  // }, [detailData]);
 
   return (
     <View style={{flexDirection: 'row'}}>
@@ -34,20 +34,20 @@ export default function TableListView({data, selectedSpace}) {
           return (
             <Table
               key={index}
-              state="free"
               shape="square"
-              id={table.id}
-              style={
+              data={table}
+              styles={
                 detailData && detailData.id === table.id ? s.selected : null
               }
               onClick={() => setDetailData(table)}
+              map={false}
             />
           );
         })}
       </ScrollView>
       <View style={s.detailContainer}>
         <View style={s.detail}>
-          {detailData &&
+          {/* {detailData &&
             detailData.orders.map((order) => {
               return (
                 <>
@@ -70,10 +70,10 @@ export default function TableListView({data, selectedSpace}) {
                   </View>
                 </>
               );
-            })}
+            })} */}
           <View style={s.total}>
             <Text style={s.totalText}>Total</Text>
-            <Text style={s.totalText}>$ {total}</Text>
+            {/* <Text style={s.totalText}>$ {total}</Text> */}
           </View>
         </View>
       </View>

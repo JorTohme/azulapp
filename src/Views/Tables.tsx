@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -13,8 +13,9 @@ import Icons from '../utils/Icons';
 import {Views} from '../utils/Types';
 import Table from '../components/Table/Table';
 import TableListView from '../components/TableListView/TableListView';
-import {Mock} from '../utils/Mock';
 import SpaceSelector from '../components/SpaceSelector/SpaceSelector';
+
+import getSpaces from '../utils/Connections/getSpaces';
 
 function SelectorBar({selectedView, setSelectedView}) {
   return (
@@ -54,7 +55,22 @@ function SelectorBar({selectedView, setSelectedView}) {
 
 export default function Tables() {
   const [selectedView, setSelectedView] = useState(Views.Map);
-  const [selectedSpace, setSelectedSpace] = useState(0);
+  const [selectedSpace, setSelectedSpace] = useState(1);
+
+  const [loading, setLoading] = useState(true);
+  const [spaces, setSpaces] = useState([]);
+
+  useEffect(() => {
+    getSpaces()
+      .then((res) => setSpaces(res))
+      .then(() => setLoading(false));
+  }, []);
+
+  console.log(spaces);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <SafeAreaView style={s.container}>
@@ -64,27 +80,19 @@ export default function Tables() {
           setSelectedView={setSelectedView}
         />
         <View>
-          <SpaceSelector data={Mock} setSelectedSpace={setSelectedSpace} />
+          <SpaceSelector data={spaces} setSelectedSpace={setSelectedSpace} />
         </View>
       </View>
       {selectedView === Views.Map ? (
         <View>
           <ScrollView style={s.scrollView} contentContainerStyle={s.mapView}>
-            {Mock[selectedSpace].tables.map((table, index) => {
-              return (
-                <Table
-                  key={index}
-                  state={table.state}
-                  id={table.id}
-                  shape="square"
-                  map
-                />
-              );
+            {spaces[selectedSpace - 1].tables.map((table) => {
+              return <Table key={table.id} data={table} shape="square" map />;
             })}
           </ScrollView>
         </View>
       ) : (
-        <TableListView data={Mock} selectedSpace={selectedSpace} />
+        <TableListView data={spaces} selectedSpace={selectedSpace - 1} />
       )}
     </SafeAreaView>
   );
