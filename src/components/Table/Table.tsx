@@ -10,9 +10,17 @@ interface Props {
   onClick?: any;
   shape: string;
   map?: boolean;
+  update?: any;
 }
 
-export default function Table({data, styles, onClick, shape, map}: Props) {
+export default function Table({
+  data,
+  styles,
+  onClick,
+  shape,
+  map,
+  update,
+}: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const {width} = Dimensions.get('window');
@@ -23,7 +31,7 @@ export default function Table({data, styles, onClick, shape, map}: Props) {
     state = {backgroundColor: Colors.green};
   } else if (data.state === 'preparing') {
     state = {backgroundColor: Colors.black};
-  } else if (data.state === 'served') {
+  } else if (data.state === 'busy') {
     state = {backgroundColor: Colors.red};
   } else {
     state = {backgroundColor: Colors.gray};
@@ -52,7 +60,12 @@ export default function Table({data, styles, onClick, shape, map}: Props) {
           onPress={() => setModalVisible(true)}>
           <Text style={s.number}>{data.id}</Text>
         </TouchableOpacity>
-        <OrderModal visible={modalVisible} setVisible={setModalVisible} />
+        <OrderModal
+          visible={modalVisible}
+          setVisible={setModalVisible}
+          tableData={data}
+          update={update}
+        />
       </>
     );
   } else {

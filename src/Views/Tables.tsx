@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  RefreshControl,
 } from 'react-native';
 import Colors from '../utils/Colors';
 import Icons from '../utils/Icons';
@@ -14,8 +15,6 @@ import {Views} from '../utils/Types';
 import Table from '../components/Table/Table';
 import TableListView from '../components/TableListView/TableListView';
 import SpaceSelector from '../components/SpaceSelector/SpaceSelector';
-
-import getSpaces from '../utils/Connections/getSpaces';
 
 function SelectorBar({selectedView, setSelectedView}) {
   return (
@@ -53,20 +52,16 @@ function SelectorBar({selectedView, setSelectedView}) {
   );
 }
 
-export default function Tables() {
+export default function Tables({loading, spaces, updateSpaces}) {
   const [selectedView, setSelectedView] = useState(Views.Map);
   const [selectedSpace, setSelectedSpace] = useState(1);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const [loading, setLoading] = useState(true);
-  const [spaces, setSpaces] = useState([]);
-
-  useEffect(() => {
-    getSpaces()
-      .then((res) => setSpaces(res))
-      .then(() => setLoading(false));
-  }, []);
-
-  console.log(spaces);
+  const onRefresh = () => {
+    setRefreshing(true);
+    updateSpaces();
+    setRefreshing(false);
+  };
 
   if (loading) {
     return <Text>Loading...</Text>;
@@ -85,9 +80,22 @@ export default function Tables() {
       </View>
       {selectedView === Views.Map ? (
         <View>
-          <ScrollView style={s.scrollView} contentContainerStyle={s.mapView}>
+          <ScrollView
+            style={s.scrollView}
+            contentContainerStyle={s.mapView}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
             {spaces[selectedSpace - 1].tables.map((table) => {
-              return <Table key={table.id} data={table} shape="square" map />;
+              return (
+                <Table
+                  key={table.id}
+                  data={table}
+                  shape="square"
+                  map
+                  update={updateSpaces}
+                />
+              );
             })}
           </ScrollView>
         </View>

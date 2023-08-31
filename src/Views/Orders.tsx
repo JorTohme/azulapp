@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet, ScrollView, SafeAreaView} from 'react-native';
 import Order from '../components/Order/Order';
 import getTodayOrders from '../utils/Connections/getTodayOrders';
-import {MockOrders} from '../utils/MockOrders';
 
 export default function Orders() {
   const [loading, setLoading] = useState(true);

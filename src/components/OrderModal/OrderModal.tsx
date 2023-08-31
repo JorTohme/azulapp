@@ -1,56 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
   Modal,
-  Text,
   TouchableOpacity,
   Dimensions,
   Image,
   Pressable,
 } from 'react-native';
 import Icons from '../../utils/Icons';
-import Colors from '../../utils/Colors';
 
-const TableFree = () => {
-  const [people, setPeople] = useState(1);
+import TableFree from './TableFree';
+import TableBusy from './TableBusy';
 
-  return (
-    <View style={s.viewContainer}>
-      <View style={s.buttonDefault}>
-        <View style={{flexDirection: 'row', alignItems: 'center', gap: 20}}>
-          <View style={s.buttonIconBackground}>
-            <Image source={Icons.PeopleIcon} style={s.buttonIcon} />
-          </View>
-          <View>
-            <Text>Personas </Text>
-            <Text>{people}</Text>
-          </View>
-        </View>
-        <View style={s.plusminusContainer}>
-          <TouchableOpacity
-            style={s.plusminus}
-            onPress={() => (people > 1 ? setPeople(people - 1) : null)}>
-            <Image source={Icons.Minus} style={s.plusminusIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={s.plusminus}
-            onPress={() => setPeople(people + 1)}>
-            <Image source={Icons.Plus} style={s.plusminusIcon} />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <TouchableOpacity style={s.buttonOpen} activeOpacity={0.8}>
-        <Text style={s.buttonOpenText}>Abrir Mesa</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-export default function OrderModal({visible, setVisible}) {
+export default function OrderModal({visible, setVisible, tableData, update}) {
   const {height} = Dimensions.get('window');
-
-  const tableData = {state: 'free'};
 
   return (
     <Modal
@@ -76,10 +40,15 @@ export default function OrderModal({visible, setVisible}) {
           ]}>
           <View style={s.closeContainer}>
             <TouchableOpacity onPress={() => setVisible(!visible)}>
-              <Image source={Icons.CloseIcon} style={{width: 28, height: 28}} />
+              <Image source={Icons.CloseIcon} style={s.closeIcon} />
             </TouchableOpacity>
           </View>
-          {tableData.state === 'free' ? <TableFree /> : null}
+          {tableData.state === 'free' ? (
+            <TableFree tableData={tableData} update={update} />
+          ) : null}
+          {tableData.state === 'busy' ? (
+            <TableBusy tableData={tableData} />
+          ) : null}
         </View>
       </View>
     </Modal>
@@ -112,69 +81,8 @@ const s = StyleSheet.create({
   closeContainer: {
     alignItems: 'flex-end',
   },
-  viewContainer: {
-    // backgroundColor: Colors.pink,
-    justifyContent: 'space-between',
-    height: '90%',
-  },
-  buttonDefault: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 10,
-    paddingVertical: 9,
-    marginTop: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: '5%',
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#f77839',
-    borderRadius: 8,
-    padding: 10,
-    elevation: 2,
-    marginTop: 20,
-  },
-  buttonOpenText: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 18,
-  },
-  buttonIcon: {
-    width: 22,
-    height: 22,
-    resizeMode: 'contain',
-  },
-  buttonIconBackground: {
-    backgroundColor: Colors.gray6,
-    borderRadius: 50,
-    padding: 12,
-  },
-  plusminusContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 15,
-  },
-  plusminus: {
-    backgroundColor: Colors.gray6,
-    borderRadius: 50,
-    padding: 10,
-  },
-  plusminusIcon: {
-    width: 23,
-    height: 23,
-    resizeMode: 'contain',
+  closeIcon: {
+    width: 28,
+    height: 28,
   },
 });

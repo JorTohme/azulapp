@@ -16,6 +16,9 @@ web-build/
 *.key
 *.mobileprovision
 
+# Env files
+.env
+
 # Metro
 .metro-health-check*
 
