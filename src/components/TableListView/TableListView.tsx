@@ -3,14 +3,17 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Colors from '../../utils/Colors';
 import Table from '../Table/Table';
 
+import TableFree from '../OrderModal/TableFree';
+import TableBusy from '../OrderModal/TableBusy';
+
 export default function TableListView({data, selectedSpace}) {
-  const [detailData, setDetailData] = useState(
+  const [selectedTable, setSelectedTable] = useState(
     data[selectedSpace].tables[0] ? data[selectedSpace].tables[0] : null,
   );
   // const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    setDetailData(data[selectedSpace].tables[0]);
+    setSelectedTable(data[selectedSpace].tables[0]);
   }, [data, selectedSpace]);
 
   // useEffect(() => {
@@ -37,16 +40,78 @@ export default function TableListView({data, selectedSpace}) {
               shape="square"
               data={table}
               styles={
-                detailData && detailData.id === table.id ? s.selected : null
+                selectedTable && selectedTable.id === table.id
+                  ? s.selected
+                  : null
               }
-              onClick={() => setDetailData(table)}
+              onClick={() => setSelectedTable(table)}
               map={false}
             />
           );
         })}
       </ScrollView>
       <View style={s.detailContainer}>
-        <View style={s.detail}>
+        <View>
+          {selectedTable.state === 'free' && (
+            <>
+              <View>
+                <View
+                  style={{
+                    backgroundColor:
+                      selectedTable.state === 'free'
+                        ? Colors.green
+                        : Colors.red,
+                    padding: 10,
+                  }}>
+                  <Text
+                    style={{
+                      color: Colors.white,
+                      fontWeight: 'bold',
+                      fontSize: 20,
+                      textAlign: 'center',
+                    }}>
+                    Mesa {selectedTable.id}
+                  </Text>
+                </View>
+                <TableFree
+                  tableData={selectedTable}
+                  update={() => setSelectedTable(null)}
+                  styles={{
+                    paddingTop: 10,
+                    height: 200,
+                    paddingHorizontal: 15,
+                  }}
+                />
+              </View>
+            </>
+          )}
+          {selectedTable.state === 'busy' && (
+            <View>
+              <View
+                style={{
+                  backgroundColor:
+                    selectedTable.state === 'free' ? Colors.green : Colors.red,
+                  padding: 10,
+                }}>
+                <Text
+                  style={{
+                    color: Colors.white,
+                    fontWeight: 'bold',
+                    fontSize: 20,
+                    textAlign: 'center',
+                  }}>
+                  Mesa {selectedTable.id}
+                </Text>
+              </View>
+              <TableBusy
+                tableData={selectedTable}
+                styles={{
+                  height: 500,
+                  paddingHorizontal: 15,
+                }}
+              />
+            </View>
+          )}
           {/* {detailData &&
             detailData.orders.map((order) => {
               return (
@@ -71,10 +136,11 @@ export default function TableListView({data, selectedSpace}) {
                 </>
               );
             })} */}
-          <View style={s.total}>
+
+          {/* <View style={s.total}>
             <Text style={s.totalText}>Total</Text>
-            {/* <Text style={s.totalText}>$ {total}</Text> */}
-          </View>
+            <Text style={s.totalText}>$ {total}</Text>
+          </View> */}
         </View>
       </View>
     </View>
@@ -102,14 +168,10 @@ const s = StyleSheet.create({
   },
   detailContainer: {
     flex: 1,
-    padding: 15,
-    backgroundColor: Colors.gray6,
-  },
-  detail: {
+
     backgroundColor: Colors.white,
-    borderRadius: 10,
-    padding: 15,
   },
+
   orderStyle: {
     flexDirection: 'row',
     justifyContent: 'space-between',

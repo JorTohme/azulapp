@@ -5,7 +5,13 @@ import Icons from '../../utils/Icons';
 
 import putTable from '../../utils/Connections/putTable';
 
-export default function TableFree({tableData, update}) {
+interface TableFreeProps {
+  tableData: any;
+  update: any;
+  styles?: any;
+}
+
+export default function TableFree({tableData, update, styles}: TableFreeProps) {
   const [people, setPeople] = useState(1);
 
   const openTableParams = () => {
@@ -16,7 +22,7 @@ export default function TableFree({tableData, update}) {
   };
 
   return (
-    <View style={s.viewContainer}>
+    <View style={[s.viewContainer, styles]}>
       <View style={s.buttonDefault}>
         <View style={s.iconContainer}>
           <View style={s.buttonIconBackground}>

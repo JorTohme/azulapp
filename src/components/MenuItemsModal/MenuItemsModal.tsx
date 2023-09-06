@@ -7,33 +7,56 @@ import {
   Text,
   TouchableOpacity,
   SafeAreaView,
-  ScrollView,
 } from 'react-native';
 import Colors from '../../utils/Colors';
-import getMenu from '../../utils/Connections/getMenu';
 
-export default function MenuItemsModal({visible, setVisible}) {
+import getMenu from '../../utils/Connections/getMenu';
+import ShowMenuItems from './ShowMenuItems';
+import ConfirmOrder from './ConfirmOrder';
+
+import postOrder from '../../utils/Connections/postOrder';
+
+export default function MenuItemsModal({visible, setVisible, tableNumber}) {
   const {height} = Dimensions.get('window');
   // const [loading, setLoading] = useState(true);
   const [menu, setMenu] = useState([]);
-  const [menuClassifications, setMenuClassifications] = useState([]);
+  const [menuCategories, setMenuCategories] = useState([]);
   const [selectedClassification, setSelectedClassification] = useState('');
+
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const [confirmScreen, setConfirmScreen] = useState(false);
 
   useEffect(() => {
     getMenu().then((data) => {
       setMenu(data);
 
-      let classifications = [];
+      let category = [];
       data.forEach((item) => {
-        if (!classifications.includes(item.classification)) {
-          classifications.push(item.classification);
+        if (!category.includes(item.category)) {
+          category.push(item.category);
         }
       });
 
-      setMenuClassifications(classifications);
+      setMenuCategories(category);
       // setLoading(false);
     });
   }, []);
+
+  const handleOrderSubmit = () => {
+    const orderData = {
+      waiterName: 'Guada',
+      tableNumber: tableNumber,
+      orderItems: [...selectedItems],
+    };
+
+    postOrder({data: orderData}).then((data) => {
+      if (data) {
+        setVisible(false);
+        setSelectedItems([]);
+      }
+    });
+  };
 
   return (
     <Modal
@@ -46,39 +69,41 @@ export default function MenuItemsModal({visible, setVisible}) {
       style={[s.modal, {height: height}]}>
       <SafeAreaView style={s.modal}>
         <View style={s.container}>
-          <View style={s.menuContainer}>
-            <ScrollView style={s.column}>
-              {menuClassifications.map((classification) => {
-                return (
-                  <TouchableOpacity
-                    key={classification}
-                    style={{padding: 10}}
-                    onPress={() => setSelectedClassification(classification)}>
-                    <Text>{classification}</Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </ScrollView>
-            <ScrollView style={s.body}>
-              {menu.map((item) => {
-                if (item.classification === selectedClassification) {
-                  return (
-                    <TouchableOpacity key={item.id} style={s.menuBodyItem}>
-                      <Text>{item.name}</Text>
-                    </TouchableOpacity>
-                  );
-                }
-              })}
-            </ScrollView>
-          </View>
+          {!confirmScreen ? (
+            <ShowMenuItems
+              menu={menu}
+              menuCategories={menuCategories}
+              selectedClassification={selectedClassification}
+              setSelectedClassification={setSelectedClassification}
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+            />
+          ) : (
+            <ConfirmOrder
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+            />
+          )}
 
           <View style={s.buttonsContainer}>
             <TouchableOpacity
               style={s.buttonCancel}
-              onPress={() => setVisible(!visible)}>
+              onPress={() =>
+                confirmScreen
+                  ? setConfirmScreen(false)
+                  : (setVisible(!visible), setSelectedItems([]))
+              }>
               <Text style={s.buttonCancelText}>Cancelar</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={s.buttonAccept} onPress={() => {}}>
+            <TouchableOpacity
+              style={[
+                s.buttonAccept,
+                selectedItems.length === 0 && s.buttonAcceptDisabled,
+              ]}
+              disabled={selectedItems.length === 0}
+              onPress={() => {
+                confirmScreen ? handleOrderSubmit() : setConfirmScreen(true);
+              }}>
               <Text style={s.buttonAcceptText}>Aceptar</Text>
             </TouchableOpacity>
           </View>
@@ -94,6 +119,7 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 200,
+    backgroundColor: 'white',
   },
   container: {
     height: '100%',
@@ -128,6 +154,9 @@ const s = StyleSheet.create({
     paddingHorizontal: 80,
     borderRadius: 8,
   },
+  buttonAcceptDisabled: {
+    opacity: 0.5,
+  },
   buttonCancel: {
     padding: 10,
     paddingHorizontal: 30,
@@ -145,29 +174,5 @@ const s = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 15,
-  },
-  menuContainer: {
-    flexDirection: 'row',
-    height: '100%',
-    gap: 0,
-  },
-  column: {
-    width: '30%',
-    backgroundColor: Colors.gray6,
-    paddingTop: 10,
-    marginRight: 10,
-    height: '100%',
-  },
-  body: {
-    width: '70%',
-    backgroundColor: Colors.white,
-    padding: 10,
-    height: '100%',
-  },
-  menuBodyItem: {
-    backgroundColor: Colors.gray6,
-    padding: 10,
-    marginBottom: 10,
-    borderRadius: 8,
   },
 });

@@ -12,6 +12,7 @@ const Icons = {
   ChevronRight: require('../../assets/icons/chevron-right.png'),
   Plus: require('../../assets/icons/plus.png'),
   Minus: require('../../assets/icons/minus.png'),
+  Clock: require('../../assets/icons/clock.png'),
 };
 
 export default Icons;
