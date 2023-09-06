@@ -63,10 +63,6 @@ export default function Tables({loading, spaces, updateSpaces}) {
     setRefreshing(false);
   };
 
-  if (loading) {
-    return <Text>Loading...</Text>;
-  }
-
   return (
     <SafeAreaView style={s.container}>
       <View style={{backgroundColor: Colors.background2}}>
@@ -75,7 +71,9 @@ export default function Tables({loading, spaces, updateSpaces}) {
           setSelectedView={setSelectedView}
         />
         <View>
-          <SpaceSelector data={spaces} setSelectedSpace={setSelectedSpace} />
+          {!loading && (
+            <SpaceSelector data={spaces} setSelectedSpace={setSelectedSpace} />
+          )}
         </View>
       </View>
       {selectedView === Views.Map ? (
@@ -86,17 +84,18 @@ export default function Tables({loading, spaces, updateSpaces}) {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
-            {spaces[selectedSpace - 1].tables.map((table) => {
-              return (
-                <Table
-                  key={table.id}
-                  data={table}
-                  shape="square"
-                  map
-                  update={updateSpaces}
-                />
-              );
-            })}
+            {!loading &&
+              spaces[selectedSpace - 1].tables.map((table) => {
+                return (
+                  <Table
+                    key={table.id}
+                    data={table}
+                    shape="square"
+                    map
+                    update={updateSpaces}
+                  />
+                );
+              })}
           </ScrollView>
         </View>
       ) : (

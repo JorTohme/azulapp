@@ -73,7 +73,7 @@ export default function TableBusy({tableData, styles}) {
                   </View>
                   {order.orderItems.map((item) => {
                     return (
-                      <View key={item.id}>
+                      <View key={item.id + order.id}>
                         <View style={s.iconContainer}>
                           <View style={s.buttonIconBackground}>
                             <Image

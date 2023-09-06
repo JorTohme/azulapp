@@ -11,15 +11,18 @@ export default function Orders() {
   const [store, dispatch] = useContext(StoreContext);
 
   const updateOrders = () => {
-    getTodayOrders().then((res) => {
-      dispatch({type: 'SET_ORDERS', payload: res});
-    });
+    getTodayOrders()
+      .then((res) => {
+        dispatch({type: 'SET_ORDERS', payload: res});
+      })
+      .then(() => {
+        setRefreshing(false);
+      });
   };
 
   const onRefresh = () => {
     setRefreshing(true);
     updateOrders();
-    setRefreshing(false);
   };
 
   useEffect(() => {
