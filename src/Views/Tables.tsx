@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -52,7 +52,12 @@ function SelectorBar({selectedView, setSelectedView}) {
   );
 }
 
-export default function Tables({loading, spaces, updateSpaces}) {
+export default function Tables({
+  loading,
+  spaces,
+  updateSpaces,
+  setSpecialButtonAction,
+}) {
   const [selectedView, setSelectedView] = useState(Views.Map);
   const [selectedSpace, setSelectedSpace] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
@@ -62,6 +67,22 @@ export default function Tables({loading, spaces, updateSpaces}) {
     updateSpaces();
     setRefreshing(false);
   };
+
+  useEffect(() => {
+    if (selectedView === Views.List) {
+      setSpecialButtonAction(() => {
+        return () => {
+          console.log('default special button action');
+        };
+      });
+    }
+
+    if (selectedView === Views.Map) {
+      setSpecialButtonAction(() => {
+        return () => {};
+      });
+    }
+  }, [selectedView, setSpecialButtonAction]);
 
   return (
     <SafeAreaView style={s.container}>

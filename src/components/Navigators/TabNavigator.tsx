@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useReducer, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Tables from '../../Views/Tables';
 import Orders from '../../Views/Orders';
@@ -12,9 +12,14 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [spaces, setSpaces] = useState([]);
-  // get orders y guardarlas en el store para usarlas en el componente de orders
 
   const [store, dispatch] = useContext(StoreContext);
+
+  const [specialButtonAction, setSpecialButtonAction] = useState(() => {
+    return () => {
+      console.log('default special button action');
+    };
+  });
 
   const updateSpaces = () => {
     getSpaces().then((res) => setSpaces(res));
@@ -31,14 +36,16 @@ export default function App() {
     getTodayOrders().then((res) => {
       dispatch({type: 'SET_ORDERS', payload: res});
     });
-  }, [
-    dispatch,
-    // updateOrders,
-  ]);
+  }, [dispatch]);
 
   return (
     <Tab.Navigator
-      tabBar={(props) => <TabNavigatorStyle {...props} />}
+      tabBar={(props) => (
+        <TabNavigatorStyle
+          {...props}
+          specialButtonAction={specialButtonAction}
+        />
+      )}
       screenOptions={{
         tabBarStyle: {
           backgroundColor: Colors.blue,
@@ -55,6 +62,7 @@ export default function App() {
             loading={loading}
             spaces={spaces}
             updateSpaces={updateSpaces}
+            setSpecialButtonAction={setSpecialButtonAction}
           />
         )}
         options={{

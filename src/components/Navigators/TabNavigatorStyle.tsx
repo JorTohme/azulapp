@@ -17,9 +17,12 @@ const viewIconActive = [Icons.TabTableActive, Icons.TabFoodActive];
 
 const isIOS = Platform.OS === 'ios';
 
-export default function TabNavigator({state, descriptors, navigation}) {
-  // Check if the device is IOS
-
+export default function TabNavigator({
+  state,
+  descriptors,
+  navigation,
+  specialButtonAction,
+}) {
   return (
     <View style={s.background}>
       <View style={s.container}>
@@ -68,7 +71,11 @@ export default function TabNavigator({state, descriptors, navigation}) {
           );
         })}
       </View>
-      <TouchableOpacity style={s.addButton} onPress={() => {}}>
+      <TouchableOpacity
+        style={s.addButton}
+        onPress={() => {
+          specialButtonAction();
+        }}>
         <Image source={Icons.TabPlus} style={s.plusIcon} />
       </TouchableOpacity>
     </View>
