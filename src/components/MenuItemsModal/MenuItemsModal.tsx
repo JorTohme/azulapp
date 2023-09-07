@@ -9,12 +9,11 @@ import {
   SafeAreaView,
 } from 'react-native';
 import Colors from '../../utils/Colors';
-
-import getMenu from '../../utils/Connections/getMenu';
 import ShowMenuItems from './ShowMenuItems';
 import ConfirmOrder from './ConfirmOrder';
-
+import getMenu from '../../utils/Connections/getMenu';
 import postOrder from '../../utils/Connections/postOrder';
+
 import {useUpdateOrders} from '../../utils/Hooks';
 
 export default function MenuItemsModal({visible, setVisible, tableNumber}) {
@@ -62,6 +61,7 @@ export default function MenuItemsModal({visible, setVisible, tableNumber}) {
       })
       .then(() => {
         updateOrders();
+        setConfirmScreen(false);
       });
   };
 

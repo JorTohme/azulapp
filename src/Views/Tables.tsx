@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -15,6 +15,8 @@ import {Views} from '../utils/Types';
 import Table from '../components/Table/Table';
 import TableListView from '../components/TableListView/TableListView';
 import SpaceSelector from '../components/SpaceSelector/SpaceSelector';
+import {useUpdateSpecialButtonAction, useUpdateSpaces} from '../utils/Hooks';
+import {StoreContext} from '../store/StoreProvider';
 
 function SelectorBar({selectedView, setSelectedView}) {
   return (
@@ -52,37 +54,31 @@ function SelectorBar({selectedView, setSelectedView}) {
   );
 }
 
-export default function Tables({
-  loading,
-  spaces,
-  updateSpaces,
-  setSpecialButtonAction,
-}) {
+export default function Tables({loading}) {
   const [selectedView, setSelectedView] = useState(Views.Map);
   const [selectedSpace, setSelectedSpace] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
 
+  const [spaces, setSpaces] = useState([]);
+
+  const [store] = useContext(StoreContext);
+
+  const updateSpaces = useUpdateSpaces(setRefreshing);
+  const updateSpecialButtonAction = useUpdateSpecialButtonAction();
+
+  useEffect(() => {
+    updateSpecialButtonAction(() => console.log('Special button pressed'));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    setSpaces(store.spaces);
+  }, [store.spaces]);
+
   const onRefresh = () => {
     setRefreshing(true);
     updateSpaces();
-    setRefreshing(false);
   };
-
-  useEffect(() => {
-    if (selectedView === Views.List) {
-      setSpecialButtonAction(() => {
-        return () => {
-          console.log('default special button action');
-        };
-      });
-    }
-
-    if (selectedView === Views.Map) {
-      setSpecialButtonAction(() => {
-        return () => {};
-      });
-    }
-  }, [selectedView, setSpecialButtonAction]);
 
   return (
     <SafeAreaView style={s.container}>
@@ -107,15 +103,7 @@ export default function Tables({
             }>
             {!loading &&
               spaces[selectedSpace - 1].tables.map((table) => {
-                return (
-                  <Table
-                    key={table.id}
-                    data={table}
-                    shape="square"
-                    map
-                    update={updateSpaces}
-                  />
-                );
+                return <Table key={table.id} data={table} shape="square" map />;
               })}
           </ScrollView>
         </View>

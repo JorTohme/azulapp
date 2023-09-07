@@ -1,10 +1,9 @@
-export default function putTable(tableData) {
-  return fetch(`http://192.168.1.94:3000/tables/open/${tableData.id}`, {
+export default function putTablePay(tableID: number) {
+  return fetch(`http://192.168.1.94:3000/tables/pay/${tableID}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(tableData),
   })
     .then((res) => {
       if (res.status === 400) {

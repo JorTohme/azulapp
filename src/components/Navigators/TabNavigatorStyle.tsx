@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,19 +10,36 @@ import {
 } from 'react-native';
 import Icons from '../../utils/Icons';
 import Colors from '../../utils/Colors';
-
+import {StoreContext} from '../../store/StoreProvider';
+import {useUpdateSpecialButtonAction} from '../../utils/Hooks';
 const viewName = ['Mesas', 'Comandas'];
 const viewIcon = [Icons.TabTable, Icons.TabFood];
 const viewIconActive = [Icons.TabTableActive, Icons.TabFoodActive];
 
 const isIOS = Platform.OS === 'ios';
 
-export default function TabNavigator({
-  state,
-  descriptors,
-  navigation,
-  specialButtonAction,
-}) {
+export default function TabNavigator({state, descriptors, navigation}) {
+  const [store] = useContext(StoreContext);
+
+  const specialButtonAction = store.specialButtonAction;
+
+  const updateSpecialButtonAction = useUpdateSpecialButtonAction();
+
+  useEffect(() => {
+    if (state.index === 1) {
+      updateSpecialButtonAction(() =>
+        console.log('Special button pressed Orders'),
+      );
+    }
+
+    if (state.index === 0) {
+      updateSpecialButtonAction(() =>
+        console.log('Special button pressed Tables'),
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.index]);
+
   return (
     <View style={s.background}>
       <View style={s.container}>

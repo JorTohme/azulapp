@@ -2,17 +2,19 @@ import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import Colors from '../../utils/Colors';
 import Icons from '../../utils/Icons';
+import {useUpdateSpaces} from '../../utils/Hooks';
 
-import putTable from '../../utils/Connections/putTable';
+import putTableOpen from '../../utils/Connections/putTableOpen';
 
 interface TableFreeProps {
   tableData: any;
-  update: any;
   styles?: any;
 }
 
-export default function TableFree({tableData, update, styles}: TableFreeProps) {
+export default function TableFree({tableData, styles}: TableFreeProps) {
   const [people, setPeople] = useState(1);
+
+  const updateSpaces = useUpdateSpaces();
 
   const openTableParams = () => {
     return {
@@ -51,8 +53,8 @@ export default function TableFree({tableData, update, styles}: TableFreeProps) {
         style={s.buttonOpen}
         activeOpacity={0.8}
         onPress={() => {
-          putTable(openTableParams()).then(() => {
-            update();
+          putTableOpen(openTableParams()).then(() => {
+            updateSpaces();
           });
         }}>
         <Text style={s.buttonOpenText}>Abrir Mesa</Text>

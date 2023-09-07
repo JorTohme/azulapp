@@ -1,51 +1,28 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Tables from '../../Views/Tables';
 import Orders from '../../Views/Orders';
 import Colors from '../../utils/Colors';
 import TabNavigatorStyle from './TabNavigatorStyle';
-import getSpaces from '../../utils/Connections/getSpaces';
-import getTodayOrders from '../../utils/Connections/getTodayOrders';
-import {StoreContext} from '../../store/StoreProvider';
+import {useUpdateSpaces, useUpdateOrders} from '../../utils/Hooks';
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [spaces, setSpaces] = useState([]);
 
-  const [store, dispatch] = useContext(StoreContext);
-
-  const [specialButtonAction, setSpecialButtonAction] = useState(() => {
-    return () => {
-      console.log('default special button action');
-    };
-  });
-
-  const updateSpaces = () => {
-    getSpaces().then((res) => setSpaces(res));
-  };
+  const updateOrders = useUpdateOrders();
+  const updateSpaces = useUpdateSpaces(setLoading);
 
   useEffect(() => {
-    getSpaces().then((res) => {
-      setSpaces(res);
-      setLoading(false);
-    });
+    setLoading(true);
+    updateOrders();
+    updateSpaces();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    getTodayOrders().then((res) => {
-      dispatch({type: 'SET_ORDERS', payload: res});
-    });
-  }, [dispatch]);
 
   return (
     <Tab.Navigator
-      tabBar={(props) => (
-        <TabNavigatorStyle
-          {...props}
-          specialButtonAction={specialButtonAction}
-        />
-      )}
+      tabBar={(props) => <TabNavigatorStyle {...props} />}
       screenOptions={{
         tabBarStyle: {
           backgroundColor: Colors.blue,
@@ -57,14 +34,7 @@ export default function App() {
       }}>
       <Tab.Screen
         name="Tables"
-        children={() => (
-          <Tables
-            loading={loading}
-            spaces={spaces}
-            updateSpaces={updateSpaces}
-            setSpecialButtonAction={setSpecialButtonAction}
-          />
-        )}
+        children={() => <Tables loading={loading} />}
         options={{
           headerShown: false,
         }}

@@ -13,7 +13,7 @@ import Icons from '../../utils/Icons';
 import TableFree from './TableFree';
 import TableBusy from './TableBusy';
 
-export default function OrderModal({visible, setVisible, tableData, update}) {
+export default function OrderModal({visible, setVisible, tableData}) {
   const {height} = Dimensions.get('window');
 
   return (
@@ -44,7 +44,7 @@ export default function OrderModal({visible, setVisible, tableData, update}) {
             </TouchableOpacity>
           </View>
           {tableData.state === 'free' ? (
-            <TableFree tableData={tableData} update={update} />
+            <TableFree tableData={tableData} />
           ) : null}
           {tableData.state === 'busy' ? (
             <TableBusy tableData={tableData} />

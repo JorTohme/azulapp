@@ -10,17 +10,9 @@ interface Props {
   onClick?: any;
   shape: string;
   map?: boolean;
-  update?: any;
 }
 
-export default function Table({
-  data,
-  styles,
-  onClick,
-  shape,
-  map,
-  update,
-}: Props) {
+export default function Table({data, styles, onClick, shape, map}: Props) {
   const [modalVisible, setModalVisible] = useState(false);
 
   const {width} = Dimensions.get('window');
@@ -29,8 +21,8 @@ export default function Table({
 
   if (data.state === 'free') {
     state = {backgroundColor: Colors.green};
-  } else if (data.state === 'preparing') {
-    state = {backgroundColor: Colors.black};
+  } else if (data.state === 'pay') {
+    state = {backgroundColor: Colors.blueSecondary};
   } else if (data.state === 'busy') {
     state = {backgroundColor: Colors.red};
   } else {
@@ -64,7 +56,6 @@ export default function Table({
           visible={modalVisible}
           setVisible={setModalVisible}
           tableData={data}
-          update={update}
         />
       </>
     );
