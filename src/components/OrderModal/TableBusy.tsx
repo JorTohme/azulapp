@@ -12,7 +12,12 @@ import Icons from '../../utils/Icons';
 import Colors from '../../utils/Colors';
 import {StoreContext} from '../../store/StoreProvider';
 
-export default function TableBusy({tableData, styles}) {
+interface Props {
+  tableData: any;
+  styles?: any;
+}
+
+export default function TableBusy({tableData, styles}: Props) {
   const [menuModal, setMenuModal] = useState(false);
   const [orderList, setOrderList] = useState([]);
 
@@ -73,7 +78,7 @@ export default function TableBusy({tableData, styles}) {
                   </View>
                   {order.orderItems.map((item) => {
                     return (
-                      <View key={item.id + order.id}>
+                      <View key={item.menuItem.id}>
                         <View style={s.iconContainer}>
                           <View style={s.buttonIconBackground}>
                             <Image

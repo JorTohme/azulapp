@@ -2,27 +2,20 @@ import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, ScrollView, RefreshControl, View} from 'react-native';
 import Order from '../components/Order/Order';
 import {StoreContext} from '../store/StoreProvider';
-import getTodayOrders from '../utils/Connections/getTodayOrders';
+import {useUpdateOrders} from '../utils/Hooks';
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
-  const [store, dispatch] = useContext(StoreContext);
+  const [store] = useContext(StoreContext);
 
-  const updateOrders = () => {
-    getTodayOrders()
-      .then((res) => {
-        dispatch({type: 'SET_ORDERS', payload: res});
-      })
-      .then(() => {
-        setRefreshing(false);
-      });
-  };
+  const updateOrders = useUpdateOrders();
 
   const onRefresh = () => {
     setRefreshing(true);
     updateOrders();
+    setRefreshing(false);
   };
 
   useEffect(() => {

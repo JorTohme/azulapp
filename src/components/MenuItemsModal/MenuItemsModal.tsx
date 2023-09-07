@@ -15,6 +15,7 @@ import ShowMenuItems from './ShowMenuItems';
 import ConfirmOrder from './ConfirmOrder';
 
 import postOrder from '../../utils/Connections/postOrder';
+import {useUpdateOrders} from '../../utils/Hooks';
 
 export default function MenuItemsModal({visible, setVisible, tableNumber}) {
   const {height} = Dimensions.get('window');
@@ -26,6 +27,8 @@ export default function MenuItemsModal({visible, setVisible, tableNumber}) {
   const [selectedItems, setSelectedItems] = useState([]);
 
   const [confirmScreen, setConfirmScreen] = useState(false);
+
+  const updateOrders = useUpdateOrders();
 
   useEffect(() => {
     getMenu().then((data) => {
@@ -50,12 +53,16 @@ export default function MenuItemsModal({visible, setVisible, tableNumber}) {
       orderItems: [...selectedItems],
     };
 
-    postOrder({data: orderData}).then((data) => {
-      if (data) {
-        setVisible(false);
-        setSelectedItems([]);
-      }
-    });
+    postOrder({data: orderData})
+      .then((data) => {
+        if (data) {
+          setVisible(false);
+          setSelectedItems([]);
+        }
+      })
+      .then(() => {
+        updateOrders();
+      });
   };
 
   return (
