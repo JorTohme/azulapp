@@ -3,6 +3,7 @@ import {StoreContext} from '../store/StoreProvider';
 import getTodayOrders from './Connections/getTodayOrders';
 import putTablePay from './Connections/putTablePay';
 import getSpaces from './Connections/getSpaces';
+import putTableFree from './Connections/putTableFree';
 
 function useUpdateOrders() {
   const [store, dispatch] = useContext(StoreContext);
@@ -47,10 +48,12 @@ function useUpdateSpecialButtonAction() {
 
 function usePayTable() {
   const updateOrders = useUpdateOrders();
+  const updateSpaces = useUpdateSpaces();
   return (tableId) => {
     putTablePay(tableId)
       .then(() => {
         updateOrders();
+        updateSpaces();
       })
       .catch((err) => {
         console.log(err);
@@ -58,6 +61,20 @@ function usePayTable() {
   };
 }
 
+function useFreeTable() {
+  const updateSpaces = useUpdateSpaces();
+  return (tableId) => {
+    putTableFree(tableId)
+      .then(() => {
+        updateSpaces();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+}
+
+export {useFreeTable};
 export {useUpdateSpaces};
 export {usePayTable};
 export {useUpdateSpecialButtonAction};

@@ -36,6 +36,8 @@ export default function TableBusy({tableData, styles}: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  let total = 0;
+
   return (
     <>
       <View style={[s.viewContainer, styles]}>
@@ -54,20 +56,23 @@ export default function TableBusy({tableData, styles}: Props) {
         <ScrollView style={s.mt10} contentContainerStyle={s.scrollViewContent}>
           {orderList.map((order) => {
             if (order.table_id === tableData.id) {
+              // Pasar la hora a hora local
+              const date = new Date(order.created_at).toLocaleString('es-AR', {
+                hour: 'numeric',
+                minute: 'numeric',
+                timeZone: 'America/Argentina/Buenos_Aires',
+              });
+
               return (
                 <View key={order.id} style={[s.buttonDefault, s.item]}>
                   <View style={s.iconContainer}>
                     <View style={s.buttonIconBackground}>
                       <Image source={Icons.Clock} style={s.buttonIcon} />
                     </View>
-                    <Text style={s.font16}>
-                      {order.created_at
-                        .split('T')[1]
-                        .split('.')[0]
-                        .slice(0, -3)}
-                    </Text>
+                    <Text style={s.font16}>{date}</Text>
                   </View>
                   {order.orderItems.map((item) => {
+                    total += item.quantity * item.menuItem.price;
                     return (
                       <View key={item.menuItem.id}>
                         <View style={s.iconContainer}>
@@ -77,9 +82,15 @@ export default function TableBusy({tableData, styles}: Props) {
                               style={s.buttonIcon}
                             />
                           </View>
-                          <Text style={[s.font16, s.width75]}>
-                            {item.quantity} {item.menuItem.name}
-                          </Text>
+                          <View style={s.width85}>
+                            <Text style={[s.font16, s.width75]}>
+                              {item.quantity} {item.menuItem.name}
+                            </Text>
+                            {item.note && <Text>{item.note}</Text>}
+                            <Text style={s.bold}>
+                              ${item.menuItem.price} c/u
+                            </Text>
+                          </View>
                         </View>
                       </View>
                     );
@@ -88,27 +99,30 @@ export default function TableBusy({tableData, styles}: Props) {
               );
             }
           })}
+          <View>
+            <Text style={s.total}>Total: ${total}</Text>
+          </View>
+          {!styles && (
+            <TouchableOpacity
+              style={s.buttonOpen}
+              activeOpacity={0.8}
+              onPress={() => {
+                setMenuModal(true);
+              }}>
+              <Text style={s.buttonOpenText}>Añadir comanda</Text>
+            </TouchableOpacity>
+          )}
+          {styles && (
+            <TouchableOpacity
+              style={s.buttonPre}
+              activeOpacity={0.8}
+              onPress={() => {
+                payTable(tableData.id);
+              }}>
+              <Text style={s.buttonOpenText}>Precuenta</Text>
+            </TouchableOpacity>
+          )}
         </ScrollView>
-        {!styles && (
-          <TouchableOpacity
-            style={s.buttonOpen}
-            activeOpacity={0.8}
-            onPress={() => {
-              setMenuModal(true);
-            }}>
-            <Text style={s.buttonOpenText}>Añadir comanda</Text>
-          </TouchableOpacity>
-        )}
-        {styles && (
-          <TouchableOpacity
-            style={s.buttonPre}
-            activeOpacity={0.8}
-            onPress={() => {
-              payTable(tableData.id);
-            }}>
-            <Text style={s.buttonOpenText}>Precuenta</Text>
-          </TouchableOpacity>
-        )}
       </View>
       <MenuItemsModal
         visible={menuModal}
@@ -121,7 +135,6 @@ export default function TableBusy({tableData, styles}: Props) {
 
 const s = StyleSheet.create({
   viewContainer: {
-    // backgroundColor: Colors.pink,
     justifyContent: 'space-between',
     height: '90%',
     paddingTop: 10,
@@ -183,10 +196,12 @@ const s = StyleSheet.create({
   },
   iconContainer: {flexDirection: 'row', alignItems: 'center', gap: 20},
   font16: {fontSize: 16},
-  width75: {maxWidth: '75%'},
+  width85: {width: '85%'},
+  width75: {width: '75%'},
+  bold: {fontWeight: 'bold'},
   mt10: {marginTop: 10},
   scrollViewContent: {
-    paddingBottom: 10,
+    paddingBottom: 150,
     paddingHorizontal: '3%',
   },
   item: {
@@ -196,5 +211,9 @@ const s = StyleSheet.create({
     alignItems: 'flex-start',
     marginTop: 20,
     gap: 10,
+  },
+  total: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

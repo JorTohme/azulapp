@@ -75,7 +75,6 @@ export default function TableListView({data, selectedSpace}) {
                 </View>
                 <TableFree
                   tableData={selectedTable}
-                  update={() => setSelectedTable(null)}
                   styles={{
                     paddingTop: 10,
                     height: 200,
@@ -106,7 +105,6 @@ export default function TableListView({data, selectedSpace}) {
               <TableBusy
                 tableData={selectedTable}
                 styles={{
-                  height: 500,
                   paddingHorizontal: 15,
                 }}
               />

@@ -12,6 +12,7 @@ import Icons from '../../utils/Icons';
 
 import TableFree from './TableFree';
 import TableBusy from './TableBusy';
+import TablePay from './TablePay';
 
 export default function OrderModal({visible, setVisible, tableData}) {
   const {height} = Dimensions.get('window');
@@ -43,12 +44,9 @@ export default function OrderModal({visible, setVisible, tableData}) {
               <Image source={Icons.CloseIcon} style={s.closeIcon} />
             </TouchableOpacity>
           </View>
-          {tableData.state === 'free' ? (
-            <TableFree tableData={tableData} />
-          ) : null}
-          {tableData.state === 'busy' ? (
-            <TableBusy tableData={tableData} />
-          ) : null}
+          {tableData.state === 'free' && <TableFree tableData={tableData} />}
+          {tableData.state === 'busy' && <TableBusy tableData={tableData} />}
+          {tableData.state === 'pay' && <TablePay tableData={tableData} />}
         </View>
       </View>
     </Modal>
