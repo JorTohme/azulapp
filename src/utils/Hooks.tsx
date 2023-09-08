@@ -5,7 +5,7 @@ import putTablePay from './Connections/putTablePay';
 import getSpaces from './Connections/getSpaces';
 import putTableFree from './Connections/putTableFree';
 
-function useUpdateOrders() {
+function useUpdateOrders(setLoading?) {
   const [store, dispatch] = useContext(StoreContext);
 
   return () => {
@@ -22,19 +22,20 @@ function useUpdateSpaces(setLoading?) {
   const [store, dispatch] = useContext(StoreContext);
 
   return () => {
-    getSpaces().then((spaces) => {
-      dispatch({
-        type: 'SET_SPACES',
-        payload: spaces,
+    getSpaces()
+      .then((spaces) => {
+        dispatch({
+          type: 'SET_SPACES',
+          payload: spaces,
+        });
+      })
+      .then(() => {
+        if (setLoading) {
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+        }
       });
-
-      if (setLoading) {
-        // wait 1 sec
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      }
-    });
   };
 }
 

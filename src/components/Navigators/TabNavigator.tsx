@@ -5,13 +5,43 @@ import Orders from '../../Views/Orders';
 import Colors from '../../utils/Colors';
 import TabNavigatorStyle from './TabNavigatorStyle';
 import {useUpdateSpaces, useUpdateOrders} from '../../utils/Hooks';
+
 const Tab = createBottomTabNavigator();
+
+// websocket connection socket.io
+import io from 'socket.io-client';
+
+const socket = io('http://192.168.1.94:3000');
 
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const [toastInfo, setToastInfo] = useState(null);
 
   const updateOrders = useUpdateOrders();
   const updateSpaces = useUpdateSpaces(setLoading);
+
+  useEffect(() => {
+    socket.connect();
+    function onConnect() {
+      console.log('connected');
+    }
+
+    socket.on('connect', onConnect);
+
+    socket.on('updateOrders', (res) => {
+      if (res.success) {
+        updateOrders();
+      }
+    });
+
+    socket.on('updateSpaces', (res) => {
+      if (res.success) {
+        updateSpaces();
+      }
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setLoading(true);
