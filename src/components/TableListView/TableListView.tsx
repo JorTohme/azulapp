@@ -29,7 +29,7 @@ export default function TableListView({data, selectedSpace}) {
   // }, [detailData]);
 
   return (
-    <View style={{flexDirection: 'row'}}>
+    <View style={{flexDirection: 'row', height: '100%'}}>
       <ScrollView
         style={[s.scrollViewList]}
         contentContainerStyle={[s.listView, {paddingBottom: 200}]}>
