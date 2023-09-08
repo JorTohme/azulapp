@@ -29,7 +29,10 @@ function useUpdateSpaces(setLoading?) {
       });
 
       if (setLoading) {
-        setLoading(false);
+        // wait 1 sec
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       }
     });
   };
