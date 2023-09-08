@@ -51,35 +51,22 @@ function useUpdateSpecialButtonAction() {
 }
 
 function usePayTable() {
-  const updateOrders = useUpdateOrders();
-  const updateSpaces = useUpdateSpaces();
   return (tableId) => {
-    putTablePay(tableId)
-      .then(() => {
-        updateOrders();
-        updateSpaces();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    putTablePay(tableId).catch((err) => {
+      console.log(err);
+    });
   };
 }
 
 function useFreeTable() {
-  const updateSpaces = useUpdateSpaces();
   return (tableId) => {
-    putTableFree(tableId)
-      .then(() => {
-        updateSpaces();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    putTableFree(tableId).catch((err) => {
+      console.log(err);
+    });
   };
 }
 
-export {useFreeTable};
+export {useFreeTable, usePayTable}; // useOpenTable no existe
 export {useUpdateSpaces};
-export {usePayTable};
 export {useUpdateSpecialButtonAction};
 export {useUpdateOrders};
