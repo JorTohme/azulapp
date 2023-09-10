@@ -17,11 +17,17 @@ export default function TableListView({data, selectedSpace}) {
 
   console.log(selectedTable.state);
 
+  const titleColors = {
+    free: Colors.green,
+    busy: Colors.red,
+    pay: Colors.blue,
+  };
+
   return (
-    <View style={{flexDirection: 'row', height: '100%'}}>
+    <View style={s.TableListView}>
       <ScrollView
         style={[s.scrollViewList]}
-        contentContainerStyle={[s.listView, {paddingBottom: 200}]}>
+        contentContainerStyle={[s.listView]}>
         {data[selectedSpace].tables.map((table, index) => {
           return (
             <Table
@@ -42,54 +48,28 @@ export default function TableListView({data, selectedSpace}) {
       <View style={s.detailContainer}>
         <View>
           <View
-            style={{
-              backgroundColor:
-                selectedTable.state === 'free'
-                  ? Colors.green
-                  : selectedTable.state === 'busy'
-                  ? Colors.red
-                  : Colors.blue,
-              padding: 10,
-            }}>
-            <Text
-              style={{
-                color: Colors.white,
-                fontWeight: 'bold',
-                fontSize: 20,
-                textAlign: 'center',
-              }}>
-              Mesa {selectedTable.id}
-            </Text>
-            <Text
-              style={{
-                color: Colors.white,
-                fontWeight: 'bold',
-                fontSize: 12,
-                textAlign: 'center',
-              }}>
+            style={[
+              s.title,
+              {backgroundColor: titleColors[selectedTable.state]},
+            ]}>
+            <Text style={s.titleText}>Mesa {selectedTable.id}</Text>
+            <Text style={[s.titleText, s.subtitleText]}>
               {selectedTable.state === 'free' && 'Libre'}
               {selectedTable.state === 'busy' && 'Ocupada'}
               {selectedTable.state === 'pay' && 'Pagando'}
             </Text>
           </View>
           {selectedTable.state === 'free' && (
-            <TableFree
-              tableData={selectedTable}
-              styles={{
-                paddingTop: 10,
-                height: 200,
-                paddingHorizontal: 15,
-              }}
-            />
+            <TableFree tableData={selectedTable} styles={s.tableFree} />
           )}
           {selectedTable.state === 'busy' && (
-            <TableBusy
-              tableData={selectedTable}
-              styles={{
-                paddingHorizontal: 15,
-              }}
-            />
+            <TableBusy tableData={selectedTable} styles={s.tableBusy} />
           )}
+          {
+            // selectedTable.state === 'pay' && (
+            //   <TablePay tableData={selectedTable} styles={s.tablePay} />
+            // )
+          }
         </View>
       </View>
     </View>
@@ -97,6 +77,10 @@ export default function TableListView({data, selectedSpace}) {
 }
 
 const s = StyleSheet.create({
+  TableListView: {
+    flexDirection: 'row',
+    height: '100%',
+  },
   listView: {
     paddingHorizontal: 15,
     paddingVertical: 10,
@@ -111,6 +95,7 @@ const s = StyleSheet.create({
     borderRightColor: Colors.lightGray,
     borderRightWidth: 0.5,
     backgroundColor: Colors.background2,
+    paddingBottom: 220,
   },
   selected: {
     borderWidth: 2.5,
@@ -120,4 +105,22 @@ const s = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.white,
   },
+  title: {
+    paddingVertical: 10,
+  },
+  titleText: {
+    color: Colors.white,
+    fontWeight: 'bold',
+    fontSize: 20,
+    textAlign: 'center',
+  },
+  subtitleText: {
+    fontSize: 12,
+  },
+  tableFree: {
+    paddingTop: 10,
+    height: 200,
+    paddingHorizontal: 15,
+  },
+  tableBusy: {paddingHorizontal: 15},
 });
