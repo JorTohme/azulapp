@@ -41,75 +41,54 @@ export default function TableListView({data, selectedSpace}) {
       </ScrollView>
       <View style={s.detailContainer}>
         <View>
+          <View
+            style={{
+              backgroundColor:
+                selectedTable.state === 'free'
+                  ? Colors.green
+                  : selectedTable.state === 'busy'
+                  ? Colors.red
+                  : Colors.blue,
+              padding: 10,
+            }}>
+            <Text
+              style={{
+                color: Colors.white,
+                fontWeight: 'bold',
+                fontSize: 20,
+                textAlign: 'center',
+              }}>
+              Mesa {selectedTable.id}
+            </Text>
+            <Text
+              style={{
+                color: Colors.white,
+                fontWeight: 'bold',
+                fontSize: 12,
+                textAlign: 'center',
+              }}>
+              {selectedTable.state === 'free' && 'Libre'}
+              {selectedTable.state === 'busy' && 'Ocupada'}
+              {selectedTable.state === 'pay' && 'Pagando'}
+            </Text>
+          </View>
           {selectedTable.state === 'free' && (
-            <>
-              <View>
-                <View
-                  style={{
-                    backgroundColor:
-                      selectedTable.state === 'free'
-                        ? Colors.green
-                        : Colors.red,
-                    padding: 10,
-                  }}>
-                  <Text
-                    style={{
-                      color: Colors.white,
-                      fontWeight: 'bold',
-                      fontSize: 20,
-                      textAlign: 'center',
-                    }}>
-                    Mesa {selectedTable.id}
-                  </Text>
-                  <Text
-                    style={{
-                      color: Colors.white,
-                      fontWeight: 'bold',
-                      fontSize: 12,
-                      textAlign: 'center',
-                    }}>
-                    {selectedTable.state === 'free' && 'Libre'}
-                    {selectedTable.state === 'busy' && 'Ocupada'}
-                    {selectedTable.state === 'pay' && 'Pagando'}
-                    {selectedTable.state}
-                  </Text>
-                </View>
-                <TableFree
-                  tableData={selectedTable}
-                  styles={{
-                    paddingTop: 10,
-                    height: 200,
-                    paddingHorizontal: 15,
-                  }}
-                />
-              </View>
-            </>
+            <TableFree
+              tableData={selectedTable}
+              styles={{
+                paddingTop: 10,
+                height: 200,
+                paddingHorizontal: 15,
+              }}
+            />
           )}
           {selectedTable.state === 'busy' && (
-            <View>
-              <View
-                style={{
-                  backgroundColor:
-                    selectedTable.state === 'free' ? Colors.green : Colors.red,
-                  padding: 10,
-                }}>
-                <Text
-                  style={{
-                    color: Colors.white,
-                    fontWeight: 'bold',
-                    fontSize: 20,
-                    textAlign: 'center',
-                  }}>
-                  Mesa {selectedTable.id}
-                </Text>
-              </View>
-              <TableBusy
-                tableData={selectedTable}
-                styles={{
-                  paddingHorizontal: 15,
-                }}
-              />
-            </View>
+            <TableBusy
+              tableData={selectedTable}
+              styles={{
+                paddingHorizontal: 15,
+              }}
+            />
           )}
         </View>
       </View>
@@ -140,37 +119,5 @@ const s = StyleSheet.create({
   detailContainer: {
     flex: 1,
     backgroundColor: Colors.white,
-  },
-
-  orderStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  amountName: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  amount: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  orderDetail: {
-    paddingVertical: 10,
-    borderBottomColor: Colors.lightGray,
-    borderBottomWidth: 1,
-  },
-  order2: {
-    marginBottom: 20,
-  },
-  total: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  totalText: {
-    fontWeight: 'bold',
-    fontSize: 20,
   },
 });

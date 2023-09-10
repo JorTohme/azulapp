@@ -1,9 +1,12 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Colors from '../../utils/Colors';
+
+// Screens
 import TabNavigator from './TabNavigator';
 import Login from '../UserHandling/Login';
 import OptionsMenu from '../../Views/OptionsMenu';
-import Colors from '../../utils/Colors';
+import Offline from '../../Views/Offline';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +37,7 @@ export default function StackNavigator() {
           headerTintColor: '#fff',
         }}
       />
+      <Stack.Screen name="Offline" component={Offline} />
     </Stack.Navigator>
   );
 }

@@ -14,6 +14,7 @@ const Icons = {
   Minus: require('../../assets/icons/minus.png'),
   Clock: require('../../assets/icons/clock.png'),
   GearWhite: require('../../assets/icons/gear.png'),
+  Retry: require('../../assets/icons/retry.png'),
 };
 
 export default Icons;
