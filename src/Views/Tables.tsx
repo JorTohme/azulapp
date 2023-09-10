@@ -17,6 +17,7 @@ import TableListView from '../components/TableListView/TableListView';
 import SpaceSelector from '../components/SpaceSelector/SpaceSelector';
 import {useUpdateSpecialButtonAction, useUpdateSpaces} from '../utils/Hooks';
 import {StoreContext} from '../store/StoreProvider';
+import Header from '../components/Header/Header';
 
 function SelectorBar({selectedView, setSelectedView}) {
   return (
@@ -54,7 +55,7 @@ function SelectorBar({selectedView, setSelectedView}) {
   );
 }
 
-export default function Tables({loading}) {
+export default function Tables({navigation, loading}) {
   const [selectedView, setSelectedView] = useState(Views.Map);
   const [selectedSpace, setSelectedSpace] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
@@ -81,20 +82,23 @@ export default function Tables({loading}) {
   };
 
   return (
-    <SafeAreaView style={s.container}>
-      <View style={{backgroundColor: Colors.background2}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: Colors.selected2,
+      }}>
+      <View style={{backgroundColor: Colors.white}}>
+        <Header navigation={navigation} />
         <SelectorBar
           selectedView={selectedView}
           setSelectedView={setSelectedView}
         />
-        <View>
-          {!loading && (
-            <SpaceSelector data={spaces} setSelectedSpace={setSelectedSpace} />
-          )}
-        </View>
+        {!loading && (
+          <SpaceSelector data={spaces} setSelectedSpace={setSelectedSpace} />
+        )}
       </View>
       {selectedView === Views.Map ? (
-        <View>
+        <View style={s.container}>
           <ScrollView
             style={s.scrollView}
             contentContainerStyle={s.mapView}
@@ -116,8 +120,8 @@ export default function Tables({loading}) {
 
 const s = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: Colors.gray6,
+    height: '100%',
   },
   scrollView: {
     height: '100%',
@@ -135,11 +139,11 @@ const s = StyleSheet.create({
 const selectorStyles = StyleSheet.create({
   viewContainer: {
     paddingHorizontal: 15,
-    paddingTop: 15,
+    paddingTop: 12,
+    paddingBottom: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: 10,
   },
   selectors: {
     flexDirection: 'row',

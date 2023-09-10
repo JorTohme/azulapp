@@ -18,8 +18,10 @@ const Colors = {
   gray6: '#f2f2f2',
   selected: '#e84545',
 
+  selected2: '#b32b2b',
+
   text2: '#10231d',
-  background2: '#e8f1fa',
+  background2: '#f2f2f2',
   primary2: '#6a2f42',
   secondary2: '#e7deca',
   accent2: '#9e4763',

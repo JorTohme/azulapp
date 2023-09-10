@@ -1,10 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, ScrollView, RefreshControl, View} from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  RefreshControl,
+  View,
+  SafeAreaView,
+} from 'react-native';
 import Order from '../components/Order/Order';
 import {StoreContext} from '../store/StoreProvider';
 import {useUpdateOrders} from '../utils/Hooks';
+import Colors from '../utils/Colors';
+import Header from '../components/Header/Header';
 
-export default function Orders() {
+export default function Orders({navigation}) {
   const [orders, setOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -23,24 +31,29 @@ export default function Orders() {
   }, [store.orders]);
 
   return (
-    <View style={{paddingTop: 50}}>
-      <ScrollView
-        style={s.orderContainer}
-        contentContainerStyle={s.containerPadding}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        {orders.map((order) => (
-          <Order key={order.id} data={order} />
-        ))}
-      </ScrollView>
-    </View>
+    <SafeAreaView
+      style={{
+        backgroundColor: Colors.selected2,
+      }}>
+      <View style={{backgroundColor: Colors.gray6}}>
+        <Header navigation={navigation} />
+        <ScrollView
+          style={s.orderContainer}
+          contentContainerStyle={s.containerPadding}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
+          {orders.map((order) => (
+            <Order key={order.id} data={order} />
+          ))}
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const s = StyleSheet.create({
   container: {
-    flex: 1,
     paddingTop: 20,
   },
   orderContainer: {
@@ -49,6 +62,6 @@ const s = StyleSheet.create({
     paddingVertical: 10,
   },
   containerPadding: {
-    paddingBottom: 100,
+    paddingBottom: 220,
   },
 });
