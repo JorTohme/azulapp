@@ -23,7 +23,7 @@ export default function SpaceSelector({data, setSelectedSpace}) {
 const s = StyleSheet.create({
   spaceSelector: {
     height: 50,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
     borderBottomColor: Colors.gray,
   },
   selectContainer: {
