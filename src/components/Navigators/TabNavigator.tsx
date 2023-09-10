@@ -13,7 +13,7 @@ import io from 'socket.io-client';
 
 const socket = io('http://192.168.1.94:3000');
 
-export default function App() {
+export default function TabNavigator({navigation}) {
   const [loading, setLoading] = useState(true);
   const [toastInfo, setToastInfo] = useState(null);
 
@@ -64,7 +64,7 @@ export default function App() {
       }}>
       <Tab.Screen
         name="Tables"
-        children={() => <Tables loading={loading} />}
+        children={() => <Tables loading={loading} navigation={navigation} />}
         options={{
           headerShown: false,
         }}
