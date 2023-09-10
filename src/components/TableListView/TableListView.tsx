@@ -10,23 +10,10 @@ export default function TableListView({data, selectedSpace}) {
   const [selectedTable, setSelectedTable] = useState(
     data[selectedSpace].tables[0] ? data[selectedSpace].tables[0] : null,
   );
-  // const [total, setTotal] = useState(0);
 
   useEffect(() => {
     setSelectedTable(data[selectedSpace].tables[0]);
   }, [data, selectedSpace]);
-
-  // useEffect(() => {
-  //   let totalAmount = 0;
-  //   if (detailData) {
-  //     detailData.orders.map((order) => {
-  //       order.items.map((item) => {
-  //         totalAmount += item.price * item.amount;
-  //       });
-  //     });
-  //   }
-  //   setTotal(totalAmount);
-  // }, [detailData]);
 
   return (
     <View style={{flexDirection: 'row', height: '100%'}}>
@@ -110,35 +97,6 @@ export default function TableListView({data, selectedSpace}) {
               />
             </View>
           )}
-          {/* {detailData &&
-            detailData.orders.map((order) => {
-              return (
-                <>
-                  <View key={order.name} style={s.order2}>
-                    <Text style={{fontWeight: '500'}}>Orden {order.name}</Text>
-                    {order.items.map((item) => {
-                      return (
-                        <View key={item.name} style={s.orderDetail}>
-                          <View style={s.orderStyle}>
-                            <View style={s.amount}>
-                              <Text>{item.amount}</Text>
-                              <Text>{item.name}</Text>
-                            </View>
-                            <Text>$ {item.price}</Text>
-                          </View>
-                          <Text>{item.note}</Text>
-                        </View>
-                      );
-                    })}
-                  </View>
-                </>
-              );
-            })} */}
-
-          {/* <View style={s.total}>
-            <Text style={s.totalText}>Total</Text>
-            <Text style={s.totalText}>$ {total}</Text>
-          </View> */}
         </View>
       </View>
     </View>
@@ -166,7 +124,6 @@ const s = StyleSheet.create({
   },
   detailContainer: {
     flex: 1,
-
     backgroundColor: Colors.white,
   },
 
