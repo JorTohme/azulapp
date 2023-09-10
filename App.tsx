@@ -17,7 +17,10 @@ export default function App() {
       <NavigationContainer>
         <SafeAreaProvider>
           {/* Only Android: */}
-          <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor={Colors.selected2}
+          />
           <ToastProvider>
             <StackNavigator />
           </ToastProvider>
