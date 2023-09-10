@@ -15,6 +15,8 @@ export default function TableListView({data, selectedSpace}) {
     setSelectedTable(data[selectedSpace].tables[0]);
   }, [data, selectedSpace]);
 
+  console.log(selectedTable.state);
+
   return (
     <View style={{flexDirection: 'row', height: '100%'}}>
       <ScrollView
@@ -58,6 +60,18 @@ export default function TableListView({data, selectedSpace}) {
                       textAlign: 'center',
                     }}>
                     Mesa {selectedTable.id}
+                  </Text>
+                  <Text
+                    style={{
+                      color: Colors.white,
+                      fontWeight: 'bold',
+                      fontSize: 12,
+                      textAlign: 'center',
+                    }}>
+                    {selectedTable.state === 'free' && 'Libre'}
+                    {selectedTable.state === 'busy' && 'Ocupada'}
+                    {selectedTable.state === 'pay' && 'Pagando'}
+                    {selectedTable.state}
                   </Text>
                 </View>
                 <TableFree
@@ -120,7 +134,8 @@ const s = StyleSheet.create({
     backgroundColor: Colors.background2,
   },
   selected: {
-    backgroundColor: Colors.acent,
+    borderWidth: 2.5,
+    borderColor: Colors.selected2,
   },
   detailContainer: {
     flex: 1,

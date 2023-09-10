@@ -7,13 +7,14 @@ import Colors from '../../utils/Colors';
 
 const Stack = createNativeStackNavigator();
 
+const headerOptions = {
+  headerShown: false,
+  gestureEnabled: false,
+};
+
 export default function StackNavigator() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-        gestureEnabled: false,
-      }}>
+    <Stack.Navigator screenOptions={headerOptions}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Main" component={TabNavigator} />
       <Stack.Screen
@@ -24,7 +25,12 @@ export default function StackNavigator() {
           headerStyle: {
             backgroundColor: Colors.selected,
           },
-          headerTitle: '',
+          headerTitle: 'Opciones',
+          headerTitleStyle: {
+            color: Colors.white,
+            fontWeight: 'bold',
+            fontSize: 21,
+          },
           headerTintColor: '#fff',
         }}
       />

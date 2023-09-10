@@ -26,12 +26,6 @@ export default function TabNavigator({state, descriptors, navigation}) {
   const updateSpecialButtonAction = useUpdateSpecialButtonAction();
 
   useEffect(() => {
-    if (state.index === 1) {
-      updateSpecialButtonAction(() =>
-        console.log('Special button pressed Orders'),
-      );
-    }
-
     if (state.index === 0) {
       updateSpecialButtonAction(() =>
         console.log('Special button pressed Tables'),
@@ -89,10 +83,11 @@ export default function TabNavigator({state, descriptors, navigation}) {
         })}
       </View>
       <TouchableOpacity
-        style={s.addButton}
+        style={[s.addButton, state.index === 1 && s.disabledButton]}
         onPress={() => {
           specialButtonAction();
-        }}>
+        }}
+        disabled={state.index === 1}>
         <Image source={Icons.TabPlus} style={s.plusIcon} />
       </TouchableOpacity>
     </View>
@@ -164,5 +159,8 @@ const s = StyleSheet.create({
   plusIcon: {
     width: 35,
     height: 35,
+  },
+  disabledButton: {
+    backgroundColor: '#f09797',
   },
 });

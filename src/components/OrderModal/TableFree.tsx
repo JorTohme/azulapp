@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import Colors from '../../utils/Colors';
 import Icons from '../../utils/Icons';
@@ -22,6 +22,10 @@ export default function TableFree({tableData, styles}: TableFreeProps) {
       people: people,
     };
   };
+
+  useEffect(() => {
+    setPeople(1);
+  }, [tableData]);
 
   return (
     <View style={[s.viewContainer, styles]}>

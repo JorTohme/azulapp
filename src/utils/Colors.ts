@@ -15,9 +15,12 @@ const Colors = {
   gray: '#c4c4c4',
   lightGray: '#dedede',
 
+  darkRed: '#821f1f',
+
   gray6: '#f2f2f2',
   selected: '#e84545',
 
+  // dark red
   selected2: '#b32b2b',
 
   text2: '#10231d',

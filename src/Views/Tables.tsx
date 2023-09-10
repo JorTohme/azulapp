@@ -22,7 +22,6 @@ import Header from '../components/Header/Header';
 function SelectorBar({selectedView, setSelectedView}) {
   return (
     <View style={selectorStyles.viewContainer}>
-      <Text>Ver mesas como: </Text>
       <View style={selectorStyles.selectors}>
         <TouchableOpacity
           style={selectorStyles.selector}
@@ -88,14 +87,16 @@ export default function Tables({navigation, loading}) {
         backgroundColor: Colors.selected2,
       }}>
       <View style={{backgroundColor: Colors.white}}>
-        <Header navigation={navigation} />
+        <Header title="Mesas" navigation={navigation} />
         <SelectorBar
           selectedView={selectedView}
           setSelectedView={setSelectedView}
         />
-        {!loading && (
-          <SpaceSelector data={spaces} setSelectedSpace={setSelectedSpace} />
-        )}
+        <SpaceSelector
+          data={spaces}
+          setSelectedSpace={setSelectedSpace}
+          loading={loading}
+        />
       </View>
       {selectedView === Views.Map ? (
         <View style={s.container}>
@@ -142,8 +143,10 @@ const selectorStyles = StyleSheet.create({
     paddingTop: 12,
     paddingBottom: 8,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.gray,
   },
   selectors: {
     flexDirection: 'row',

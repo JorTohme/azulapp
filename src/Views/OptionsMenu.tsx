@@ -12,16 +12,16 @@ export default function OptionsMenu() {
   return (
     <ScrollView style={s.container}>
       <View style={s.optionButtonContainer}>
-        <TouchableOpacity style={s.optionButton}>
+        <TouchableOpacity style={s.optionButton} activeOpacity={0.6}>
           <Text>Perfil</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={s.optionButton}>
+        <TouchableOpacity style={s.optionButton} activeOpacity={0.6}>
           <Text>Perfil</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={s.optionButton}>
+        <TouchableOpacity style={s.optionButton} activeOpacity={0.6}>
           <Text>Perfil</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={s.optionButton}>
+        <TouchableOpacity style={s.optionButton} activeOpacity={0.6}>
           <Text>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
