@@ -54,6 +54,9 @@ const s = StyleSheet.create({
     borderColor: '#1453b8',
     borderWidth: 2,
     alignItems: 'center',
+
+    // Web
+    maxWidth: 400,
   },
   loginTextContainer: {
     position: 'absolute',
