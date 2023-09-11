@@ -38,8 +38,18 @@ export default function OrderModal({visible, setVisible, tableData}) {
               marginTop: height * 0.5,
               paddingBottom: height * 0.08,
             },
+            tableData.state === 'busy' && {
+              height: height * 1,
+              marginTop: height * 0.2,
+              paddingBottom: height * 0.08,
+            },
+            tableData.state === 'busy' && s.padding0,
           ]}>
-          <View style={s.closeContainer}>
+          <View
+            style={[
+              s.closeContainer,
+              tableData.state === 'busy' && s.padding20,
+            ]}>
             <TouchableOpacity onPress={() => setVisible(!visible)}>
               <Image source={Icons.CloseIcon} style={s.closeIcon} />
             </TouchableOpacity>
@@ -82,5 +92,11 @@ const s = StyleSheet.create({
   closeIcon: {
     width: 28,
     height: 28,
+  },
+  padding0: {
+    paddingHorizontal: 0,
+  },
+  padding20: {
+    paddingHorizontal: 20,
   },
 });

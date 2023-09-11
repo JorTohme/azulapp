@@ -15,10 +15,10 @@ import {usePayTable, useUpdateSpecialButtonAction} from '../../utils/Hooks';
 
 interface Props {
   tableData: any;
-  styles?: any;
+  list?: boolean;
 }
 
-export default function TableBusy({tableData, styles}: Props) {
+export default function TableBusy({tableData, list}: Props) {
   const [menuModal, setMenuModal] = useState(false);
   const [orderList, setOrderList] = useState([]);
 
@@ -40,23 +40,15 @@ export default function TableBusy({tableData, styles}: Props) {
 
   return (
     <>
-      <View style={[s.viewContainer, styles]}>
-        <View style={s.buttonDefault}>
-          <View style={s.iconContainer}>
-            <View style={s.buttonIconBackground}>
-              <Image source={Icons.PeopleIcon} style={s.buttonIcon} />
-            </View>
-            <Text style={s.font16}>
-              {tableData.people !== 1
-                ? `${tableData.people} personas`
-                : `${tableData.people} persona`}
-            </Text>
-          </View>
-        </View>
-        <ScrollView style={s.mt10} contentContainerStyle={s.scrollViewContent}>
+      <View style={[s.viewContainer]}>
+        <ScrollView
+          style={[s.mt10]}
+          contentContainerStyle={[
+            s.scrollViewContent,
+            list && s.specialPadding,
+          ]}>
           {orderList.map((order) => {
             if (order.table_id === tableData.id) {
-              // Pasar la hora a hora local
               const date = new Date(order.created_at).toLocaleString('es-AR', {
                 hour: 'numeric',
                 minute: 'numeric',
@@ -99,10 +91,21 @@ export default function TableBusy({tableData, styles}: Props) {
               );
             }
           })}
-          <View>
-            <Text style={s.total}>Total: ${total}</Text>
+        </ScrollView>
+        <View style={[s.container, list && s.container2]}>
+          <View style={s.buttonDefault}>
+            <View style={s.iconContainer}>
+              <View style={s.buttonIconBackground}>
+                <Image source={Icons.PeopleIcon} style={s.buttonIcon} />
+              </View>
+              <Text style={s.font16}>
+                {tableData.people !== 1
+                  ? `${tableData.people} personas`
+                  : `${tableData.people} persona`}
+              </Text>
+            </View>
           </View>
-          {!styles && (
+          {!list && (
             <TouchableOpacity
               style={s.buttonOpen}
               activeOpacity={0.8}
@@ -112,17 +115,19 @@ export default function TableBusy({tableData, styles}: Props) {
               <Text style={s.buttonOpenText}>Añadir comanda</Text>
             </TouchableOpacity>
           )}
-          {styles && (
-            <TouchableOpacity
-              style={s.buttonPre}
-              activeOpacity={0.8}
-              onPress={() => {
-                payTable(tableData.id);
-              }}>
-              <Text style={s.buttonOpenText}>Precuenta</Text>
-            </TouchableOpacity>
-          )}
-        </ScrollView>
+          <TouchableOpacity
+            style={[s.buttonPre, list && s.buttonPreSpecialPadding]}
+            activeOpacity={0.8}
+            onPress={() => {
+              payTable(tableData.id);
+            }}>
+            <Image source={Icons.PrinterWhite} style={s.printerIcon} />
+            <View style={s.buttonPreTotal}>
+              <Text style={s.buttonOpenText}>Imprimir precuenta</Text>
+              <Text style={s.buttonTotalText}>Total: ${total}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
       <MenuItemsModal
         visible={menuModal}
@@ -138,24 +143,42 @@ const s = StyleSheet.create({
     justifyContent: 'space-between',
     height: '90%',
     paddingTop: 10,
+    flexDirection: 'column-reverse',
+  },
+  container: {
+    paddingHorizontal: 20,
+  },
+  container2: {
+    paddingHorizontal: 15,
   },
   title: {
     fontSize: 25,
     fontWeight: 'bold',
   },
   buttonOpen: {
-    backgroundColor: '#f77839',
+    // backgroundColor: '#f77839',
+    backgroundColor: Colors.selected2,
     borderRadius: 8,
     padding: 10,
     elevation: 2,
     marginTop: 20,
   },
   buttonPre: {
-    backgroundColor: Colors.pink,
+    backgroundColor: Colors.selected2,
     borderRadius: 8,
     padding: 10,
     elevation: 2,
     marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: '15%',
+  },
+  buttonPreSpecialPadding: {
+    paddingHorizontal: 10,
+  },
+  buttonPreTotal: {
+    gap: 10,
   },
   buttonOpenText: {
     backgroundColor: 'transparent',
@@ -163,6 +186,12 @@ const s = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 18,
+  },
+  buttonTotalText: {
+    backgroundColor: 'transparent',
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 14,
   },
   buttonDefault: {
     backgroundColor: Colors.gray6,
@@ -201,8 +230,8 @@ const s = StyleSheet.create({
   bold: {fontWeight: 'bold'},
   mt10: {marginTop: 10},
   scrollViewContent: {
-    paddingBottom: 150,
-    paddingHorizontal: '3%',
+    paddingBottom: 20,
+    paddingHorizontal: 20,
   },
   item: {
     height: 'auto',
@@ -215,5 +244,14 @@ const s = StyleSheet.create({
   total: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  specialPadding: {
+    paddingBottom: 260,
+    paddingHorizontal: '2%',
+  },
+  printerIcon: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
   },
 });

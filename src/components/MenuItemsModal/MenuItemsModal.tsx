@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import Colors from '../../utils/Colors';
 import ShowMenuItems from './ShowMenuItems';
@@ -74,6 +75,7 @@ export default function MenuItemsModal({visible, setVisible, tableNumber}) {
         setVisible(!visible);
       }}
       style={[s.modal, {height: height}]}>
+      <StatusBar barStyle="dark-content" />
       <SafeAreaView style={s.modal}>
         <View style={s.container}>
           {!confirmScreen ? (

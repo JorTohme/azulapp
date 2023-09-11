@@ -20,7 +20,7 @@ export default function TableListView({data, selectedSpace}) {
   const titleColors = {
     free: Colors.green,
     busy: Colors.red,
-    pay: Colors.blue,
+    pay: Colors.blueSecondary,
   };
 
   return (
@@ -63,7 +63,7 @@ export default function TableListView({data, selectedSpace}) {
             <TableFree tableData={selectedTable} styles={s.tableFree} />
           )}
           {selectedTable.state === 'busy' && (
-            <TableBusy tableData={selectedTable} styles={s.tableBusy} />
+            <TableBusy tableData={selectedTable} list />
           )}
           {
             // selectedTable.state === 'pay' && (
@@ -95,7 +95,7 @@ const s = StyleSheet.create({
     borderRightColor: Colors.lightGray,
     borderRightWidth: 0.5,
     backgroundColor: Colors.background2,
-    paddingBottom: 220,
+    paddingBottom: 200,
   },
   selected: {
     borderWidth: 2.5,

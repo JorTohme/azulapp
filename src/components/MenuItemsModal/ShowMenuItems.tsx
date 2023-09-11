@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
+  StatusBar,
 } from 'react-native';
 import Colors from '../../utils/Colors';
 import Toast from 'react-native-toast-notifications';
