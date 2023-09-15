@@ -7,6 +7,7 @@ import TabNavigator from './TabNavigator';
 import Login from '../UserHandling/Login';
 import OptionsMenu from '../../Views/OptionsMenu';
 import Offline from '../../Views/Offline';
+import Register from '../UserHandling/Register';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,23 @@ export default function StackNavigator() {
   return (
     <Stack.Navigator screenOptions={headerOptions}>
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: Colors.selected,
+          },
+          headerTitle: 'Registro',
+          headerTitleStyle: {
+            color: Colors.white,
+            fontWeight: 'bold',
+            fontSize: 21,
+          },
+          headerTintColor: '#fff',
+        }}
+      />
       <Stack.Screen name="Main" component={TabNavigator} />
       <Stack.Screen
         name="Options"
