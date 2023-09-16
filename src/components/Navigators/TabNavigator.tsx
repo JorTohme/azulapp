@@ -50,6 +50,11 @@ export default function TabNavigator({navigation}) {
       socket.connect();
     });
 
+    // on unmount disconnect
+    return () => {
+      socket.disconnect();
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -88,16 +93,12 @@ export default function TabNavigator({navigation}) {
       <Tab.Screen
         name="Tables"
         children={() => <Tables loading={loading} navigation={navigation} />}
-        options={{
-          headerShown: false,
-        }}
+        options={{headerShown: false}}
       />
       <Tab.Screen
         name="Orders"
         component={Orders}
-        options={{
-          headerShown: false,
-        }}
+        options={{headerShown: false}}
       />
     </Tab.Navigator>
   );

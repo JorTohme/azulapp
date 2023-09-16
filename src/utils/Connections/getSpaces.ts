@@ -1,8 +1,14 @@
-export default function getSpaces() {
+import {getUserSession} from '../Helper';
+
+export default async function getSpaces() {
+  const user: any = await getUserSession();
+
   return fetch('http://192.168.1.94:3000/spaces/tables', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      email: user.email,
+      password: user.password,
     },
   })
     .then((res) => {

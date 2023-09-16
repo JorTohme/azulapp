@@ -8,6 +8,7 @@ import {
   Image,
   SafeAreaView,
   RefreshControl,
+  StatusBar,
 } from 'react-native';
 import Colors from '../utils/Colors';
 import Icons from '../utils/Icons';
@@ -86,6 +87,7 @@ export default function Tables({navigation, loading}) {
         flex: 1,
         backgroundColor: Colors.selected2,
       }}>
+      <StatusBar style="light" backgroundColor={Colors.selected2} />
       <View style={{backgroundColor: Colors.white}}>
         <Header title="Mesas" navigation={navigation} />
         <SelectorBar

@@ -16,7 +16,6 @@ export default function App() {
     <StoreProvider>
       <NavigationContainer>
         <SafeAreaProvider>
-          {/* Only Android: */}
           <StatusBar
             barStyle="light-content"
             backgroundColor={Colors.selected2}

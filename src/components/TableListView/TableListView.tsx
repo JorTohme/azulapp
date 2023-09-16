@@ -15,8 +15,6 @@ export default function TableListView({data, selectedSpace}) {
     setSelectedTable(data[selectedSpace].tables[0]);
   }, [data, selectedSpace]);
 
-  console.log(selectedTable.state);
-
   const titleColors = {
     free: Colors.green,
     busy: Colors.red,

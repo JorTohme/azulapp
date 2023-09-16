@@ -46,7 +46,8 @@ export default function TableBusy({tableData, list}: Props) {
           contentContainerStyle={[
             s.scrollViewContent,
             list && s.specialPadding,
-          ]}>
+          ]}
+          showsVerticalScrollIndicator={false}>
           {orderList.map((order) => {
             if (order.table_id === tableData.id) {
               const date = new Date(order.created_at).toLocaleString('es-AR', {
