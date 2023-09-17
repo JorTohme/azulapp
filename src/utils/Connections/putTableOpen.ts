@@ -1,8 +1,14 @@
-export default function putTableOpen(tableData) {
-  return fetch(`http://192.168.1.94:3000/tables/open/${tableData.id}`, {
+import {API_URL} from '@env';
+import {getUserSession} from '../Helper';
+
+export default async function putTableOpen(tableData) {
+  const user: any = await getUserSession();
+  return fetch(`${API_URL}/tables/open/${tableData.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      email: user.email,
+      password: user.password,
     },
     body: JSON.stringify(tableData),
   })

@@ -5,6 +5,7 @@ import Table from '../Table/Table';
 
 import TableFree from '../OrderModal/TableFree';
 import TableBusy from '../OrderModal/TableBusy';
+import TablePay from '../OrderModal/TablePay';
 
 export default function TableListView({data, selectedSpace}) {
   const [selectedTable, setSelectedTable] = useState(
@@ -63,11 +64,9 @@ export default function TableListView({data, selectedSpace}) {
           {selectedTable.state === 'busy' && (
             <TableBusy tableData={selectedTable} list />
           )}
-          {
-            // selectedTable.state === 'pay' && (
-            //   <TablePay tableData={selectedTable} styles={s.tablePay} />
-            // )
-          }
+          {selectedTable.state === 'pay' && (
+            <TablePay tableData={selectedTable} />
+          )}
         </View>
       </View>
     </View>

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import DefaultButton from '../Buttons/DefaultButton';
 import GeneralLoader from '../Loaders/GeneralLoader';
 import login from '../../utils/Connections/login';
 import {saveUserSession} from '../../utils/Helper';
+import {getUserSession} from '../../utils/Helper';
 import {User} from '../../utils/Types';
 
 export default function Login({navigation}) {
@@ -46,34 +47,53 @@ export default function Login({navigation}) {
   }
 
   function submit() {
+    Keyboard.dismiss();
     setEmailError(false);
     setPassError(false);
 
     if (checkEmail(email) && checkPassword(password)) {
       setLoading(true);
-      login(email, password).then((res) => {
-        if (res.success) {
-          const user: User = {
-            name: res.name,
-            email: email,
-            password: password,
-            organization: res.organization,
-          };
-          saveUserSession(user);
+      login(email, password)
+        .then((res) => {
+          if (res.success) {
+            const user: User = {
+              name: res.name,
+              email: email,
+              password: password,
+              organization: res.organization,
+            };
+            saveUserSession(user);
+            setLoading(false);
+            setEmail('');
+            setPass('');
+            navigation.navigate('Main');
+          }
           setLoading(false);
-
-          navigation.navigate('Main');
-        }
-        setLoading(false);
-      });
+        })
+        .catch(() => {
+          setLoading(false);
+        });
       return;
     }
-
-    Keyboard.dismiss();
 
     setEmailError(!checkEmail(email));
     setPassError(!checkPassword(password));
   }
+
+  useEffect(() => {
+    if (emailError || passError) {
+      Keyboard.dismiss();
+    }
+  }, [emailError, passError]);
+
+  useEffect(() => {
+    getUserSession().then((user) => {
+      if (user) {
+        navigation.navigate('Main');
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

@@ -9,3 +9,8 @@ export async function getUserSession(): Promise<User> {
   const user = await AsyncStorage.getItem('userData');
   return user ? <User>JSON.parse(user) : null;
 }
+
+export async function Logout(navigation): Promise<void> {
+  await AsyncStorage.removeItem('userData');
+  navigation.navigate('Login');
+}

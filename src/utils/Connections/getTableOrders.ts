@@ -1,5 +1,7 @@
+import {API_URL} from '@env';
+
 export default function getTableOrders(tableID) {
-  return fetch(`http://192.168.1.94:3000/tables/orders/${tableID}`, {
+  return fetch(`${API_URL}/tables/orders/${tableID}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

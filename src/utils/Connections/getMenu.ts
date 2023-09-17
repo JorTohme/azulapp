@@ -1,5 +1,7 @@
+import {API_URL} from '@env';
+
 export default function getMenu() {
-  return fetch('http://192.168.1.94:3000/menu/items', {
+  return fetch(`${API_URL}/menu/items`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

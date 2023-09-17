@@ -1,5 +1,7 @@
+import {API_URL} from '@env';
+
 export default function login(email: string, password: string) {
-  return fetch('http://192.168.1.94:3000/user/login', {
+  return fetch(`${API_URL}/user/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

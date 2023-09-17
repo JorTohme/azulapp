@@ -1,8 +1,15 @@
-export default function putTablePay(tableID: number) {
-  return fetch(`http://192.168.1.94:3000/tables/pay/${tableID}`, {
+import {API_URL} from '@env';
+import {getUserSession} from '../Helper';
+
+export default async function putTablePay(tableID: number) {
+  const user: any = await getUserSession();
+
+  return fetch(`${API_URL}/tables/pay/${tableID}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      email: user.email,
+      password: user.password,
     },
   })
     .then((res) => {

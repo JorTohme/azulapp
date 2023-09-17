@@ -7,6 +7,7 @@ import TabNavigatorStyle from './TabNavigatorStyle';
 import {useUpdateSpaces, useUpdateOrders} from '../../utils/Hooks';
 import NetInfo from '@react-native-community/netinfo';
 import io from 'socket.io-client';
+import {AppState} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const socket = io('http://192.168.1.94:3000');
@@ -41,13 +42,23 @@ export default function TabNavigator({navigation}) {
     // on disconnect retry connection
     socket.on('disconnect', () => {
       console.log('disconnected');
-      socket.connect();
+      // socket.connect();
     });
 
     // on error retry connection
-    socket.on('connect_error', () => {
-      console.log('error');
-      socket.connect();
+    // socket.on('connect_error', () => {
+    //   console.log('error');
+    //   socket.connect();
+    // });
+
+    // on close the app disconnect
+    AppState.addEventListener('change', (state) => {
+      if (state === 'background') {
+        socket.disconnect();
+      }
+      // if (state === 'active') {
+      //   socket.connect();
+      // }
     });
 
     // on unmount disconnect

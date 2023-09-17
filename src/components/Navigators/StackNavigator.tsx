@@ -8,6 +8,7 @@ import Login from '../UserHandling/Login';
 import OptionsMenu from '../../Views/OptionsMenu';
 import Offline from '../../Views/Offline';
 import Register from '../UserHandling/Register';
+import LogoutScreen from '../../Views/Logout';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +56,8 @@ export default function StackNavigator() {
           headerTintColor: '#fff',
         }}
       />
+      <Stack.Screen name="LogoutScreen" component={LogoutScreen} />
+
       <Stack.Screen name="Offline" component={Offline} />
     </Stack.Navigator>
   );

@@ -16,6 +16,8 @@ const Icons = {
   GearWhite: require('../../assets/icons/gear.png'),
   Retry: require('../../assets/icons/retry.png'),
   PrinterWhite: require('../../assets/icons/printer.png'),
+  Logout: require('../../assets/icons/profile/logout.png'),
+  User: require('../../assets/icons/profile/user.png'),
 };
 
 export default Icons;

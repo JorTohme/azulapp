@@ -15,6 +15,9 @@ const Colors = {
   gray: '#c4c4c4',
   lightGray: '#dedede',
 
+  // dark
+  darkGray: '#4a4a4a',
+
   darkRed: '#821f1f',
 
   gray6: '#f2f2f2',

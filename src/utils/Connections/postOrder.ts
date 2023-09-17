@@ -1,5 +1,7 @@
+import {API_URL} from '@env';
+
 export default function postOrder({data}) {
-  return fetch('http://192.168.1.94:3000/orders', {
+  return fetch(`${API_URL}/orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

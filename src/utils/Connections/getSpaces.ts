@@ -1,14 +1,12 @@
-import {getUserSession} from '../Helper';
+import {API_URL} from '@env';
+import {SECRET} from '@env';
 
-export default async function getSpaces() {
-  const user: any = await getUserSession();
-
-  return fetch('http://192.168.1.94:3000/spaces/tables', {
+export default function getSpaces() {
+  return fetch(`${API_URL}/spaces/tables`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      email: user.email,
-      password: user.password,
+      origin: SECRET,
     },
   })
     .then((res) => {

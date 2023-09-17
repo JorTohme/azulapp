@@ -1,5 +1,7 @@
+import {API_URL} from '@env';
+
 export default function putOrderStatus(orderId, orderData) {
-  return fetch(`http://192.168.1.94:3000/orders/${orderId}`, {
+  return fetch(`${API_URL}/orders/${orderId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
