@@ -41,7 +41,7 @@ export default function OptionsMenu({navigation}) {
       )}
 
       <View style={s.optionButtonContainer}>
-        <OptionButton text="Mis Datos" icon={Icons.User} onPress={() => {}} />
+        {/* <OptionButton text="Mis Datos" icon={Icons.User} onPress={() => {}} /> */}
         <OptionButton
           text="Cerrar Sesión"
           icon={Icons.Logout}

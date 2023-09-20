@@ -19,6 +19,7 @@ import SpaceSelector from '../components/SpaceSelector/SpaceSelector';
 import {useUpdateSpecialButtonAction, useUpdateSpaces} from '../utils/Hooks';
 import {StoreContext} from '../store/StoreProvider';
 import Header from '../components/Header/Header';
+import Images from '../utils/Images';
 
 function SelectorBar({selectedView, setSelectedView}) {
   return (
@@ -77,22 +78,19 @@ export default function Tables({navigation, loading}) {
   }, [store.spaces]);
 
   const onRefresh = () => {
+    // reconnect socket
     setRefreshing(true);
     updateSpaces();
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: Colors.selected2,
-      }}>
-      <StatusBar style="light" backgroundColor={Colors.selected2} />
+    <SafeAreaView style={s.safeAreaView}>
+      <StatusBar barStyle="light-content" backgroundColor={Colors.selected2} />
       <View style={{backgroundColor: Colors.white}}>
         <Header title="Mesas" navigation={navigation} />
         <SelectorBar
           selectedView={selectedView}
-          setSelectedView={setSelectedView}
+          setSelectedView={spaces.length > 0 ? setSelectedView : () => {}}
         />
         <SpaceSelector
           data={spaces}
@@ -109,9 +107,18 @@ export default function Tables({navigation, loading}) {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
             {!loading &&
+              spaces.length > 0 &&
               spaces[selectedSpace - 1].tables.map((table) => {
                 return <Table key={table.id} data={table} shape="square" map />;
               })}
+            {!loading && spaces.length === 0 && (
+              <View style={s.errorContainer}>
+                <Image source={Images.NoTables} style={s.image} />
+                <Text style={s.errorText}>
+                  No pudimos cargar las mesas, {'\n'} intentá actualizar
+                </Text>
+              </View>
+            )}
           </ScrollView>
         </View>
       ) : (
@@ -122,6 +129,10 @@ export default function Tables({navigation, loading}) {
 }
 
 const s = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+    backgroundColor: Colors.selected2,
+  },
   container: {
     backgroundColor: Colors.gray6,
     height: '100%',
@@ -136,6 +147,21 @@ const s = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
+  },
+  image: {
+    width: 300,
+    height: 300,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 50,
+  },
+  errorText: {
+    fontSize: 18,
+    color: Colors.selected2,
+    textAlign: 'center',
   },
 });
 

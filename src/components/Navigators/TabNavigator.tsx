@@ -14,7 +14,7 @@ const socket = io('http://192.168.1.94:3000');
 
 export default function TabNavigator({navigation}) {
   const [loading, setLoading] = useState(true);
-  const [toastInfo, setToastInfo] = useState(null);
+  // const [toastInfo, setToastInfo] = useState(null);
 
   const updateOrders = useUpdateOrders();
   const updateSpaces = useUpdateSpaces(setLoading);
@@ -22,7 +22,7 @@ export default function TabNavigator({navigation}) {
   useEffect(() => {
     socket.connect();
     function onConnect() {
-      console.log('connected');
+      console.log('connectedSocket');
     }
 
     socket.on('connect', onConnect);
@@ -39,35 +39,27 @@ export default function TabNavigator({navigation}) {
       }
     });
 
-    // on disconnect retry connection
     socket.on('disconnect', () => {
-      console.log('disconnected');
-      // socket.connect();
+      socket.connect();
     });
 
-    // on error retry connection
-    // socket.on('connect_error', () => {
-    //   console.log('error');
-    //   socket.connect();
-    // });
+    socket.on('connect_error', () => {
+      console.log('error');
+      socket.connect();
+    });
 
-    // on close the app disconnect
     AppState.addEventListener('change', (state) => {
       if (state === 'background') {
         socket.disconnect();
       }
-      // if (state === 'active') {
-      //   socket.connect();
-      // }
     });
 
-    // on unmount disconnect
     return () => {
       socket.disconnect();
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [socket.active, AppState.currentState]);
 
   useEffect(() => {
     setLoading(true);

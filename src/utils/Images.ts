@@ -5,6 +5,7 @@ const Images = {
     require('../../assets/images/OrderEmpty3.png'),
   ],
   Offline: require('../../assets/images/Offline.png'),
+  NoTables: require('../../assets/images/NoTables.png'),
 };
 
 export default Images;
