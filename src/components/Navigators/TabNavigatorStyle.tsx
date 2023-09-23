@@ -11,7 +11,6 @@ import {
 import Icons from '../../utils/Icons';
 import Colors from '../../utils/Colors';
 import {StoreContext} from '../../store/StoreProvider';
-import {useUpdateSpecialButtonAction} from '../../utils/Hooks';
 const viewName = ['Mesas', 'Comandas'];
 const viewIcon = [Icons.TabTable, Icons.TabFood];
 const viewIconActive = [Icons.TabTableActive, Icons.TabFoodActive];
@@ -19,18 +18,18 @@ const viewIconActive = [Icons.TabTableActive, Icons.TabFoodActive];
 const isIOS = Platform.OS === 'ios';
 
 export default function TabNavigator({state, descriptors, navigation}) {
-  const [store] = useContext(StoreContext);
+  const [store, dispatch] = useContext(StoreContext);
 
   const specialButtonAction = store.specialButtonAction;
 
-  const updateSpecialButtonAction = useUpdateSpecialButtonAction();
-
   useEffect(() => {
-    if (state.index === 0) {
-      updateSpecialButtonAction(() =>
-        console.log('Special button pressed Tables'),
-      );
+    if (state.index === 1) {
+      dispatch({
+        type: 'SET_SPECIAL_BUTTON_ACTIVE',
+        payload: false,
+      });
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.index]);
 
@@ -83,11 +82,13 @@ export default function TabNavigator({state, descriptors, navigation}) {
         })}
       </View>
       <TouchableOpacity
-        style={[s.addButton, state.index === 1 && s.disabledButton]}
+        style={[s.addButton, !store.specialButtonActive && s.disabledButton]}
         onPress={() => {
           specialButtonAction();
         }}
-        disabled={state.index === 1}>
+        disabled={
+          !store.specialButtonActive || store.specialButtonActive === undefined
+        }>
         <Image source={Icons.TabPlus} style={s.plusIcon} />
       </TouchableOpacity>
     </View>

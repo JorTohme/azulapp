@@ -8,6 +8,7 @@ import {
   Image,
   TextInput,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import Colors from '../../utils/Colors';
 import Icons from '../../utils/Icons';
@@ -39,7 +40,8 @@ export default function ShowMenuItems({
   };
   return (
     <View style={s.container}>
-      <KeyboardAvoidingView behavior="position">
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'position' : 'padding'}>
         <ScrollView contentContainerStyle={s.scrollviewContainer}>
           {selectedItems.map((item) => {
             return (

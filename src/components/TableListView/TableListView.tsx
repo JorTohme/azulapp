@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import Colors from '../../utils/Colors';
 import Table from '../Table/Table';
+import {useContext} from 'react';
+import {StoreContext} from '../../store/StoreProvider';
 
 import TableFree from '../OrderModal/TableFree';
 import TableBusy from '../OrderModal/TableBusy';
@@ -12,9 +14,47 @@ export default function TableListView({data, selectedSpace}) {
     data[selectedSpace].tables[0] ? data[selectedSpace].tables[0] : null,
   );
 
+  const [store, dispatch] = useContext(StoreContext);
+
   useEffect(() => {
     setSelectedTable(data[selectedSpace].tables[0]);
   }, [data, selectedSpace]);
+
+  // Mantiene la mesa seleccionada si se actualiza la lista de mesas
+  useEffect(() => {
+    if (selectedTable) {
+      setSelectedTable(
+        data[selectedSpace].tables.find((table) => {
+          return table.id === selectedTable.id;
+        }),
+      );
+    }
+
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, selectedTable]);
+
+  useEffect(() => {
+    if (data[selectedSpace].tables.length === 0) {
+      setSelectedTable(null);
+    }
+  }, [data, selectedSpace]);
+
+  useEffect(() => {
+    if (selectedTable.state === 'free' || selectedTable.state === 'pay') {
+      dispatch({
+        type: 'SET_SPECIAL_BUTTON_ACTIVE',
+        payload: false,
+      });
+    }
+
+    if (selectedTable.state === 'busy') {
+      dispatch({
+        type: 'SET_SPECIAL_BUTTON_ACTIVE',
+        payload: true,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTable]);
 
   const titleColors = {
     free: Colors.green,

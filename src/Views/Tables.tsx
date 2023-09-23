@@ -22,6 +22,22 @@ import Header from '../components/Header/Header';
 import Images from '../utils/Images';
 
 function SelectorBar({selectedView, setSelectedView}) {
+  const [store, dispatch] = useContext(StoreContext);
+
+  useEffect(() => {
+    if (selectedView === Views.Map) {
+      dispatch({
+        type: 'SET_SPECIAL_BUTTON_ACTIVE',
+        payload: true,
+      });
+
+      dispatch({
+        type: 'SET_SPECIAL_BUTTON_ACTION',
+        payload: () => console.log('Special button pressed'),
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedView]);
   return (
     <View style={selectorStyles.viewContainer}>
       <View style={selectorStyles.selectors}>

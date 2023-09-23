@@ -4,6 +4,7 @@ const initialState = {
   specialButtonAction: () => {
     console.log('specialButtonAction not set');
   },
+  specialButtonActive: false,
 };
 
 const storeReducer = (state = initialState, action) => {
@@ -22,6 +23,11 @@ const storeReducer = (state = initialState, action) => {
       return {
         ...state,
         specialButtonAction: action.payload,
+      };
+    case 'SET_SPECIAL_BUTTON_ACTIVE':
+      return {
+        ...state,
+        specialButtonActive: action.payload,
       };
     default:
       return state;

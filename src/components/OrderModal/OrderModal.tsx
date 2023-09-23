@@ -14,7 +14,13 @@ import TableFree from './TableFree';
 import TableBusy from './TableBusy';
 import TablePay from './TablePay';
 
-export default function OrderModal({visible, setVisible, tableData}) {
+interface Props {
+  visible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  tableData: any;
+}
+
+export default function OrderModal({visible, setVisible, tableData}: Props) {
   const {height} = Dimensions.get('window');
 
   return (
