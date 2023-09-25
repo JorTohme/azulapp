@@ -9,6 +9,7 @@ import OptionsMenu from '../../Views/OptionsMenu';
 import Offline from '../../Views/Offline';
 import Register from '../UserHandling/Register';
 import LogoutScreen from '../../Views/Logout';
+import DeleteAccount from '../../Views/DeleteAccount';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,7 @@ export default function StackNavigator() {
         }}
       />
       <Stack.Screen name="LogoutScreen" component={LogoutScreen} />
+      <Stack.Screen name="DeleteAccount" component={DeleteAccount} />
 
       <Stack.Screen name="Offline" component={Offline} />
     </Stack.Navigator>

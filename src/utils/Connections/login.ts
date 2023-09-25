@@ -5,7 +5,6 @@ export default function login(email: string, password: string) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      from: 'app',
     },
     body: JSON.stringify({email, password}),
   })

@@ -41,7 +41,12 @@ export default function OptionsMenu({navigation}) {
       )}
 
       <View style={s.optionButtonContainer}>
-        {/* <OptionButton text="Mis Datos" icon={Icons.User} onPress={() => {}} /> */}
+        <OptionButton
+          text="Dar de baja mi cuenta"
+          icon={Icons.CloseAccount}
+          onPress={() => navigation.navigate('DeleteAccount')}
+          chevronDisabled
+        />
         <OptionButton
           text="Cerrar Sesión"
           icon={Icons.Logout}
